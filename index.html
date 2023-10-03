@@ -1,1963 +1,690 @@
-<html>
-
-<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<title>CS 180 - Project 3 [Fa23]</title>
-	<style>
-		/* cspell:disable-file */
-		/* webkit printing magic: print all background colors */
-		html {
-			-webkit-print-color-adjust: exact;
-		}
-
-		* {
-			box-sizing: border-box;
-			-webkit-print-color-adjust: exact;
-		}
-
-		html,
-		body {
-			margin: 0;
-			padding: 0;
-		}
-
-		@media only screen {
-			body {
-				margin: 2em auto;
-				max-width: 900px;
-				color: rgb(55, 53, 47);
-			}
-		}
-
-		body {
-			line-height: 1.5;
-			white-space: pre-wrap;
-		}
-
-		a,
-		a.visited {
-			color: inherit;
-			text-decoration: underline;
-		}
-
-		.pdf-relative-link-path {
-			font-size: 80%;
-			color: #444;
-		}
-
-		h1,
-		h2,
-		h3 {
-			letter-spacing: -0.01em;
-			line-height: 1.2;
-			font-weight: 600;
-			margin-bottom: 0;
-		}
-
-		.page-title {
-			font-size: 2.5rem;
-			font-weight: 700;
-			margin-top: 0;
-			margin-bottom: 0.75em;
-		}
-
-		h1 {
-			font-size: 1.875rem;
-			margin-top: 1.875rem;
-		}
-
-		h2 {
-			font-size: 1.5rem;
-			margin-top: 1.5rem;
-		}
-
-		h3 {
-			font-size: 1.25rem;
-			margin-top: 1.25rem;
-		}
-
-		.source {
-			border: 1px solid #ddd;
-			border-radius: 3px;
-			padding: 1.5em;
-			word-break: break-all;
-		}
-
-		.callout {
-			border-radius: 3px;
-			padding: 1rem;
-		}
-
-		figure {
-			margin: 1.25em 0;
-			page-break-inside: avoid;
-		}
-
-		figcaption {
-			opacity: 0.5;
-			font-size: 85%;
-			margin-top: 0.5em;
-		}
-
-		mark {
-			background-color: transparent;
-		}
-
-		.indented {
-			padding-left: 1.5em;
-		}
-
-		hr {
-			background: transparent;
-			display: block;
-			width: 100%;
-			height: 1px;
-			visibility: visible;
-			border: none;
-			border-bottom: 1px solid rgba(55, 53, 47, 0.09);
-		}
-
-		img {
-			max-width: 100%;
-		}
-
-		@media only print {
-			img {
-				max-height: 100vh;
-				object-fit: contain;
-			}
-		}
-
-		@page {
-			margin: 1in;
-		}
-
-		.collection-content {
-			font-size: 0.875rem;
-		}
-
-		.column-list {
-			display: flex;
-			justify-content: space-between;
-		}
-
-		.column {
-			padding: 0 1em;
-		}
-
-		.column:first-child {
-			padding-left: 0;
-		}
-
-		.column:last-child {
-			padding-right: 0;
-		}
-
-		.table_of_contents-item {
-			display: block;
-			font-size: 0.875rem;
-			line-height: 1.3;
-			padding: 0.125rem;
-		}
-
-		.table_of_contents-indent-1 {
-			margin-left: 1.5rem;
-		}
-
-		.table_of_contents-indent-2 {
-			margin-left: 3rem;
-		}
-
-		.table_of_contents-indent-3 {
-			margin-left: 4.5rem;
-		}
-
-		.table_of_contents-link {
-			text-decoration: none;
-			opacity: 0.7;
-			border-bottom: 1px solid rgba(55, 53, 47, 0.18);
-		}
-
-		table,
-		th,
-		td {
-			border: 1px solid rgba(55, 53, 47, 0.09);
-			border-collapse: collapse;
-		}
-
-		table {
-			border-left: none;
-			border-right: none;
-		}
-
-		th,
-		td {
-			font-weight: normal;
-			padding: 0.25em 0.5em;
-			line-height: 1.5;
-			min-height: 1.5em;
-			text-align: left;
-		}
-
-		th {
-			color: rgba(55, 53, 47, 0.6);
-		}
-
-		ol,
-		ul {
-			margin: 0;
-			margin-block-start: 0.6em;
-			margin-block-end: 0.6em;
-		}
-
-		li>ol:first-child,
-		li>ul:first-child {
-			margin-block-start: 0.6em;
-		}
-
-		ul>li {
-			list-style: disc;
-		}
-
-		ul.to-do-list {
-			padding-inline-start: 0;
-		}
-
-		ul.to-do-list>li {
-			list-style: none;
-		}
-
-		.to-do-children-checked {
-			text-decoration: line-through;
-			opacity: 0.375;
-		}
-
-		ul.toggle>li {
-			list-style: none;
-		}
-
-		ul {
-			padding-inline-start: 1.7em;
-		}
-
-		ul>li {
-			padding-left: 0.1em;
-		}
-
-		ol {
-			padding-inline-start: 1.6em;
-		}
-
-		ol>li {
-			padding-left: 0.2em;
-		}
-
-		.mono ol {
-			padding-inline-start: 2em;
-		}
-
-		.mono ol>li {
-			text-indent: -0.4em;
-		}
-
-		.toggle {
-			padding-inline-start: 0em;
-			list-style-type: none;
-		}
-
-		/* Indent toggle children */
-		.toggle>li>details {
-			padding-left: 1.7em;
-		}
-
-		.toggle>li>details>summary {
-			margin-left: -1.1em;
-		}
-
-		.selected-value {
-			display: inline-block;
-			padding: 0 0.5em;
-			background: rgba(206, 205, 202, 0.5);
-			border-radius: 3px;
-			margin-right: 0.5em;
-			margin-top: 0.3em;
-			margin-bottom: 0.3em;
-			white-space: nowrap;
-		}
-
-		.collection-title {
-			display: inline-block;
-			margin-right: 1em;
-		}
-
-		.page-description {
-			margin-bottom: 2em;
-		}
-
-		.simple-table {
-			margin-top: 1em;
-			font-size: 0.875rem;
-			empty-cells: show;
-		}
-
-		.simple-table td {
-			height: 29px;
-			min-width: 120px;
-		}
-
-		.simple-table th {
-			height: 29px;
-			min-width: 120px;
-		}
-
-		.simple-table-header-color {
-			background: rgb(247, 246, 243);
-			color: black;
-		}
-
-		.simple-table-header {
-			font-weight: 500;
-		}
-
-		time {
-			opacity: 0.5;
-		}
-
-		.icon {
-			display: inline-block;
-			max-width: 1.2em;
-			max-height: 1.2em;
-			text-decoration: none;
-			vertical-align: text-bottom;
-			margin-right: 0.5em;
-		}
-
-		img.icon {
-			border-radius: 3px;
-		}
-
-		.user-icon {
-			width: 1.5em;
-			height: 1.5em;
-			border-radius: 100%;
-			margin-right: 0.5rem;
-		}
-
-		.user-icon-inner {
-			font-size: 0.8em;
-		}
-
-		.text-icon {
-			border: 1px solid #000;
-			text-align: center;
-		}
-
-		.page-cover-image {
-			display: block;
-			object-fit: cover;
-			width: 100%;
-			max-height: 30vh;
-		}
-
-		.page-header-icon {
-			font-size: 3rem;
-			margin-bottom: 1rem;
-		}
-
-		.page-header-icon-with-cover {
-			margin-top: -0.72em;
-			margin-left: 0.07em;
-		}
-
-		.page-header-icon img {
-			border-radius: 3px;
-		}
-
-		.link-to-page {
-			margin: 1em 0;
-			padding: 0;
-			border: none;
-			font-weight: 500;
-		}
-
-		p>.user {
-			opacity: 0.5;
-		}
-
-		td>.user,
-		td>time {
-			white-space: nowrap;
-		}
-
-		input[type="checkbox"] {
-			transform: scale(1.5);
-			margin-right: 0.6em;
-			vertical-align: middle;
-		}
-
-		p {
-			margin-top: 0.5em;
-			margin-bottom: 0.5em;
-		}
-
-		.image {
-			border: none;
-			margin: 1.5em 0;
-			padding: 0;
-			border-radius: 0;
-			text-align: center;
-		}
-
-		.code,
-		code {
-			background: rgba(135, 131, 120, 0.15);
-			border-radius: 3px;
-			padding: 0.2em 0.4em;
-			border-radius: 3px;
-			font-size: 85%;
-			tab-size: 2;
-		}
-
-		code {
-			color: #eb5757;
-		}
-
-		.code {
-			padding: 1.5em 1em;
-		}
-
-		.code-wrap {
-			white-space: pre-wrap;
-			word-break: break-all;
-		}
-
-		.code>code {
-			background: none;
-			padding: 0;
-			font-size: 100%;
-			color: inherit;
-		}
-
-		blockquote {
-			font-size: 1.25em;
-			margin: 1em 0;
-			padding-left: 1em;
-			border-left: 3px solid rgb(55, 53, 47);
-		}
-
-		.bookmark {
-			text-decoration: none;
-			max-height: 8em;
-			padding: 0;
-			display: flex;
-			width: 100%;
-			align-items: stretch;
-		}
-
-		.bookmark-title {
-			font-size: 0.85em;
-			overflow: hidden;
-			text-overflow: ellipsis;
-			height: 1.75em;
-			white-space: nowrap;
-		}
-
-		.bookmark-text {
-			display: flex;
-			flex-direction: column;
-		}
-
-		.bookmark-info {
-			flex: 4 1 180px;
-			padding: 12px 14px 14px;
-			display: flex;
-			flex-direction: column;
-			justify-content: space-between;
-		}
-
-		.bookmark-image {
-			width: 33%;
-			flex: 1 1 180px;
-			display: block;
-			position: relative;
-			object-fit: cover;
-			border-radius: 1px;
-		}
-
-		.bookmark-description {
-			color: rgba(55, 53, 47, 0.6);
-			font-size: 0.75em;
-			overflow: hidden;
-			max-height: 4.5em;
-			word-break: break-word;
-		}
-
-		.bookmark-href {
-			font-size: 0.75em;
-			margin-top: 0.25em;
-		}
-
-		.sans {
-			font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol";
-		}
-
-		.code {
-			font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace;
-		}
-
-		.serif {
-			font-family: Lyon-Text, Georgia, ui-serif, serif;
-		}
-
-		.mono {
-			font-family: iawriter-mono, Nitti, Menlo, Courier, monospace;
-		}
-
-		.pdf .sans {
-			font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP';
-		}
-
-		.pdf:lang(zh-CN) .sans {
-			font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC';
-		}
-
-		.pdf:lang(zh-TW) .sans {
-			font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC';
-		}
-
-		.pdf:lang(ko-KR) .sans {
-			font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR';
-		}
-
-		.pdf .code {
-			font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP';
-		}
-
-		.pdf:lang(zh-CN) .code {
-			font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC';
-		}
-
-		.pdf:lang(zh-TW) .code {
-			font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC';
-		}
-
-		.pdf:lang(ko-KR) .code {
-			font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR';
-		}
-
-		.pdf .serif {
-			font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP';
-		}
-
-		.pdf:lang(zh-CN) .serif {
-			font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC';
-		}
-
-		.pdf:lang(zh-TW) .serif {
-			font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC';
-		}
-
-		.pdf:lang(ko-KR) .serif {
-			font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR';
-		}
-
-		.pdf .mono {
-			font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP';
-		}
-
-		.pdf:lang(zh-CN) .mono {
-			font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC';
-		}
-
-		.pdf:lang(zh-TW) .mono {
-			font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC';
-		}
-
-		.pdf:lang(ko-KR) .mono {
-			font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR';
-		}
-
-		.highlight-default {
-			color: rgba(55, 53, 47, 1);
-		}
-
-		.highlight-gray {
-			color: rgba(120, 119, 116, 1);
-			fill: rgba(120, 119, 116, 1);
-		}
-
-		.highlight-brown {
-			color: rgba(159, 107, 83, 1);
-			fill: rgba(159, 107, 83, 1);
-		}
-
-		.highlight-orange {
-			color: rgba(217, 115, 13, 1);
-			fill: rgba(217, 115, 13, 1);
-		}
-
-		.highlight-yellow {
-			color: rgba(203, 145, 47, 1);
-			fill: rgba(203, 145, 47, 1);
-		}
-
-		.highlight-teal {
-			color: rgba(68, 131, 97, 1);
-			fill: rgba(68, 131, 97, 1);
-		}
-
-		.highlight-blue {
-			color: rgba(51, 126, 169, 1);
-			fill: rgba(51, 126, 169, 1);
-		}
-
-		.highlight-purple {
-			color: rgba(144, 101, 176, 1);
-			fill: rgba(144, 101, 176, 1);
-		}
-
-		.highlight-pink {
-			color: rgba(193, 76, 138, 1);
-			fill: rgba(193, 76, 138, 1);
-		}
-
-		.highlight-red {
-			color: rgba(212, 76, 71, 1);
-			fill: rgba(212, 76, 71, 1);
-		}
-
-		.highlight-gray_background {
-			background: rgba(241, 241, 239, 1);
-		}
-
-		.highlight-brown_background {
-			background: rgba(244, 238, 238, 1);
-		}
-
-		.highlight-orange_background {
-			background: rgba(251, 236, 221, 1);
-		}
-
-		.highlight-yellow_background {
-			background: rgba(251, 243, 219, 1);
-		}
-
-		.highlight-teal_background {
-			background: rgba(237, 243, 236, 1);
-		}
-
-		.highlight-blue_background {
-			background: rgba(231, 243, 248, 1);
-		}
-
-		.highlight-purple_background {
-			background: rgba(244, 240, 247, 0.8);
-		}
-
-		.highlight-pink_background {
-			background: rgba(249, 238, 243, 0.8);
-		}
-
-		.highlight-red_background {
-			background: rgba(253, 235, 236, 1);
-		}
-
-		.block-color-default {
-			color: inherit;
-			fill: inherit;
-		}
-
-		.block-color-gray {
-			color: rgba(120, 119, 116, 1);
-			fill: rgba(120, 119, 116, 1);
-		}
-
-		.block-color-brown {
-			color: rgba(159, 107, 83, 1);
-			fill: rgba(159, 107, 83, 1);
-		}
-
-		.block-color-orange {
-			color: rgba(217, 115, 13, 1);
-			fill: rgba(217, 115, 13, 1);
-		}
-
-		.block-color-yellow {
-			color: rgba(203, 145, 47, 1);
-			fill: rgba(203, 145, 47, 1);
-		}
-
-		.block-color-teal {
-			color: rgba(68, 131, 97, 1);
-			fill: rgba(68, 131, 97, 1);
-		}
-
-		.block-color-blue {
-			color: rgba(51, 126, 169, 1);
-			fill: rgba(51, 126, 169, 1);
-		}
-
-		.block-color-purple {
-			color: rgba(144, 101, 176, 1);
-			fill: rgba(144, 101, 176, 1);
-		}
-
-		.block-color-pink {
-			color: rgba(193, 76, 138, 1);
-			fill: rgba(193, 76, 138, 1);
-		}
-
-		.block-color-red {
-			color: rgba(212, 76, 71, 1);
-			fill: rgba(212, 76, 71, 1);
-		}
-
-		.block-color-gray_background {
-			background: rgba(241, 241, 239, 1);
-		}
-
-		.block-color-brown_background {
-			background: rgba(244, 238, 238, 1);
-		}
-
-		.block-color-orange_background {
-			background: rgba(251, 236, 221, 1);
-		}
-
-		.block-color-yellow_background {
-			background: rgba(251, 243, 219, 1);
-		}
-
-		.block-color-teal_background {
-			background: rgba(237, 243, 236, 1);
-		}
-
-		.block-color-blue_background {
-			background: rgba(231, 243, 248, 1);
-		}
-
-		.block-color-purple_background {
-			background: rgba(244, 240, 247, 0.8);
-		}
-
-		.block-color-pink_background {
-			background: rgba(249, 238, 243, 0.8);
-		}
-
-		.block-color-red_background {
-			background: rgba(253, 235, 236, 1);
-		}
-
-		.select-value-color-interactiveBlue {
-			background-color: rgba(35, 131, 226, .07);
-		}
-
-		.select-value-color-pink {
-			background-color: rgba(245, 224, 233, 1);
-		}
-
-		.select-value-color-purple {
-			background-color: rgba(232, 222, 238, 1);
-		}
-
-		.select-value-color-green {
-			background-color: rgba(219, 237, 219, 1);
-		}
-
-		.select-value-color-gray {
-			background-color: rgba(227, 226, 224, 1);
-		}
-
-		.select-value-color-translucentGray {
-			background-color: rgba(255, 255, 255, 0.0375);
-		}
-
-		.select-value-color-orange {
-			background-color: rgba(250, 222, 201, 1);
-		}
-
-		.select-value-color-brown {
-			background-color: rgba(238, 224, 218, 1);
-		}
-
-		.select-value-color-red {
-			background-color: rgba(255, 226, 221, 1);
-		}
-
-		.select-value-color-yellow {
-			background-color: rgba(253, 236, 200, 1);
-		}
-
-		.select-value-color-blue {
-			background-color: rgba(211, 229, 239, 1);
-		}
-
-		.select-value-color-pageGlass {
-			background-color: undefined;
-		}
-
-		.select-value-color-washGlass {
-			background-color: undefined;
-		}
-
-		.checkbox {
-			display: inline-flex;
-			vertical-align: text-bottom;
-			width: 16;
-			height: 16;
-			background-size: 16px;
-			margin-left: 2px;
-			margin-right: 5px;
-		}
-
-		.checkbox-on {
-			background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
-		}
-
-		.checkbox-off {
-			background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
-		}
-	</style>
-</head>
-
-<body>
-	<article id="a0b48f1f-b2ee-438a-b628-6895167e46a4" class="page sans">
-		<header><img class="page-cover-image"
-				src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me_dominic__3%201.png"
-				style="object-position:center 48.08%" />
-			<h1 class="page-title">CS 180 - Project 3 [Fa23]</h1>
-			<p class="page-description"></p>
-		</header>
-		<div class="page-body">
-			<h1 id="1dd87e08-3d38-477a-aee3-8cdf0bb58702" class="">Face Morphing</h1>
-			<p id="77411fe3-eaee-4a7a-ab90-6cc55aa46389" class="">Author: Alexander Ng</p>
-			<h2 id="78297180-a9cd-4fc3-b1c3-42ae2f4d8297" class="">Overview</h2>
-			<p id="338544d9-ab64-4eb8-8b35-ef0255477e1f" class="">This program will be divided up into parts, with the
-				final product creating a &#x27;morph&#x27; animation from one face to another.
-
-				&quot;A morph is a simultaneous warp of the image shape and a cross-dissolve of the image colors. The
-				cross-dissolve is the easy part; controlling and doing the warp is the hard part. The warp is controlled
-				by defining a correspondence between the two pictures. The correspondence should map eyes to eyes, mouth
-				to mouth, chin to chin, ears to ears, etc., to get the smoothest transformations possible&quot;. - CS
-				180 Fall 2023</p>
-			<h2 id="bba71d4b-2868-4d2f-b555-099ac9461181" class="">Part 1. Defining Correspondences</h2>
-			<p id="c4782e30-6c23-4770-a49d-52f22c7d8c71" class="">To morph 2 images, effectively, I first manually
-				selected corresponding keypoints on each image with this <a
-					href="https://inst.eecs.berkeley.edu/~cs194-26/fa22/upload/files/proj3/cs194-26-aex/tool.html">labeling
-					tool</a> , using facial features as landmarks. Afterwards, I employed the Delaunay method from
-				scipy.spatial to compute the Delaunay triangulation on the first image and copy the simplexes to the
-				other.</p>
-			<h3 id="0094bbae-f10c-4265-be21-ce74be5cea0c" class="">Results</h3>
-			<div id="5b30ee1c-a928-4a7c-9e50-24c325d88673" class="column-list">
-				<div id="6386f046-6c51-4a2f-bb55-fdc5597e72dd" style="width:25%" class="column">
-					<figure id="078e9169-706f-4f54-96ec-717af415a36e" class="image"><a
-							href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me_dominic__0.png"><img
-								style="width:422px"
-								src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me_dominic__0.png" /></a>
-					</figure>
-					<figure id="2a92593e-a2db-48ed-8415-82541deadc49" class="image" style="text-align:center"><a
-							href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/tofu_c_0.png"><img
-								style="width:270px"
-								src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/tofu_c_0.png" /></a>
-					</figure>
-				</div>
-				<div id="d3f7cec2-a6d4-41e9-9558-38d5ac6c4ee7" style="width:25%" class="column">
-					<figure id="a9fb9d4f-b46d-4bcd-9879-33128b4b0992" class="image"><a
-							href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me_dominic__2.png"><img
-								style="width:422px"
-								src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me_dominic__2.png" /></a>
-					</figure>
-					<figure id="8595cc74-0caa-45ab-90a6-991197765374" class="image" style="text-align:center"><a
-							href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/tofu_c_2.png"><img
-								style="width:270px"
-								src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/tofu_c_2.png" /></a>
-					</figure>
-				</div>
-				<div id="3298a2aa-a214-4e5a-a640-a6f46067eafc" style="width:25%" class="column">
-					<figure id="09dfc2b2-0848-4121-8ba3-40d6313d2ab1" class="image"><a
-							href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me_dominic__1.png"><img
-								style="width:422px"
-								src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me_dominic__1.png" /></a>
-					</figure>
-					<figure id="aa0ea24b-0e69-4be4-b702-d1b9fc7c872f" class="image" style="text-align:center"><a
-							href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/tofu_c_1.png"><img
-								style="width:270px"
-								src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/tofu_c_1.png" /></a>
-					</figure>
-				</div>
-				<div id="4f05be79-e5cd-4c63-9e8c-5e2747546025" style="width:25%" class="column">
-					<figure id="5faaa11a-9c2d-4366-b365-476685b04617" class="image"><a
-							href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me_dominic__3.png"><img
-								style="width:422px"
-								src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me_dominic__3.png" /></a>
-					</figure>
-					<figure id="d4d4991c-b3c0-4e04-af6e-b9d9730c6139" class="image" style="text-align:center"><a
-							href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/tofu_c_3.png"><img
-								style="width:270px"
-								src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/tofu_c_3.png" /></a>
-					</figure>
-				</div>
-			</div>
-			<h2 id="71dde94e-31c3-4ca7-8101-0c6c4af4f97c" class="">Part 2: Computing the &quot;Mid-way Face&quot;</h2>
-			<p id="c26f4f42-db5d-4478-8745-9f8ecdca17e1" class="">In this part, we will compute the &quot;Mid-way
-				Face&quot; between the first image to the final image. First, we will find the transitional image
-				between the first and final image by taking a weighted average. Then, we will find the affine
-				transformation matrix from both images to the transitional image. Finally, we will use the new found
-				affine transformation matrix to perform wrapping and color dissolution.
-
-				To find the affine transformation function, we can use the corresponding points taken during Part 1 to
-				solve for the affine transformation matrix. Since there are 6 unknowns, we will need 3 points (Note:
-				Each point has an x and y component). After finding the affine transformation matrix, we can use inverse
-				wrapping to take pixels from our first image into our new &quot;Mid-way Face&quot; image.</p>
-			<h3 id="f9920896-33a6-47fa-8e8d-ca5cde817727" class="">Equations</h3>
-			<h3 id="e6bc57bc-63ab-4ad1-a39b-9c0c3a8442f1" class="">Affine Transformation with Homogenous coordinates:
-			</h3>
-			<figure id="7b45369e-ec0c-42be-8a7b-577d01acc9cf" class="image"><a
-					href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/affine_transformation_equation.png"><img
-						style="width:390px"
-						src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/affine_transformation_equation.png" /></a>
-			</figure>
-			<h3 id="e0f900f7-6b21-4741-b9cc-d280672813be" class="">Solving for Affine Transformation through
-				Correspondence points:</h3>
-			<p id="a3c1f9db-320e-4c3d-b4ac-2ddda32f0095" class="">In linear algebra:</p>
-			<div id="6e8930ae-3203-49e7-a891-83dd6933bf78" class="column-list">
-				<div id="082bc590-8948-4251-b22a-2ed050f101a0" style="width:100%" class="column">
-					<div id="f1b6db32-1daf-43b6-b7d0-496e4b355201" class="column-list">
-						<div id="d2c351ae-1b96-4e5a-9241-cbfa54a74e99" style="width:31.25%" class="column">
-							<p id="9c271d37-473d-46f9-b90d-b7232955b66a" class="">
-							</p>
-						</div>
-						<div id="4b93606f-dca6-4364-b089-ce0e8a927a28" style="width:112.5%" class="column">
-							<p id="ef0a3fa6-2fc5-454f-9a57-471a706d844e" class="">
-								<style>
-									@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')
-								</style><span data-token-index="0" contenteditable="false"
-									class="notion-text-equation-token"
-									style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span
-											class="katex"><span class="katex-mathml"><math
-													xmlns="http://www.w3.org/1998/Math/MathML">
-													<semantics>
-														<mrow>
-															<msubsup>
-																<mi>x</mi>
-																<mn>1</mn>
-																<mo mathvariant="normal" lspace="0em" rspace="0em">′
-																</mo>
-															</msubsup>
-															<mo>=</mo>
-															<mi>a</mi>
-															<msub>
-																<mi>x</mi>
-																<mn>1</mn>
-															</msub>
-															<mo>+</mo>
-															<mi>b</mi>
-															<msub>
-																<mi>y</mi>
-																<mn>1</mn>
-															</msub>
-															<mo>+</mo>
-															<mi>c</mi>
-														</mrow>
-														<annotation encoding="application/x-tex">x_1&#x27; = ax_1 + by_1
-															+ c</annotation>
-													</semantics>
-												</math></span><span class="katex-html" aria-hidden="true"><span
-													class="base"><span class="strut"
-														style="height:1em;vertical-align:-0.24810799999999997em;"></span><span
-														class="mord"><span class="mord mathnormal">x</span><span
-															class="msupsub"><span class="vlist-t vlist-t2"><span
-																	class="vlist-r"><span class="vlist"
-																		style="height:0.751892em;"><span
-																			style="top:-2.4518920000000004em;margin-left:0em;margin-right:0.05em;"><span
-																				class="pstrut"
-																				style="height:2.7em;"></span><span
-																				class="sizing reset-size6 size3 mtight"><span
-																					class="mord mtight">1</span></span></span><span
-																			style="top:-3.063em;margin-right:0.05em;"><span
-																				class="pstrut"
-																				style="height:2.7em;"></span><span
-																				class="sizing reset-size6 size3 mtight"><span
-																					class="mord mtight"><span
-																						class="mord mtight">′</span></span></span></span></span><span
-																		class="vlist-s">​</span></span><span
-																	class="vlist-r"><span class="vlist"
-																		style="height:0.24810799999999997em;"><span></span></span></span></span></span></span><span
-														class="mspace"
-														style="margin-right:0.2777777777777778em;"></span><span
-														class="mrel">=</span><span class="mspace"
-														style="margin-right:0.2777777777777778em;"></span></span><span
-													class="base"><span class="strut"
-														style="height:0.73333em;vertical-align:-0.15em;"></span><span
-														class="mord mathnormal">a</span><span class="mord"><span
-															class="mord mathnormal">x</span><span class="msupsub"><span
-																class="vlist-t vlist-t2"><span class="vlist-r"><span
-																		class="vlist"
-																		style="height:0.30110799999999993em;"><span
-																			style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span
-																				class="pstrut"
-																				style="height:2.7em;"></span><span
-																				class="sizing reset-size6 size3 mtight"><span
-																					class="mord mtight">1</span></span></span></span><span
-																		class="vlist-s">​</span></span><span
-																	class="vlist-r"><span class="vlist"
-																		style="height:0.15em;"><span></span></span></span></span></span></span><span
-														class="mspace"
-														style="margin-right:0.2222222222222222em;"></span><span
-														class="mbin">+</span><span class="mspace"
-														style="margin-right:0.2222222222222222em;"></span></span><span
-													class="base"><span class="strut"
-														style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span
-														class="mord mathnormal">b</span><span class="mord"><span
-															class="mord mathnormal"
-															style="margin-right:0.03588em;">y</span><span
-															class="msupsub"><span class="vlist-t vlist-t2"><span
-																	class="vlist-r"><span class="vlist"
-																		style="height:0.30110799999999993em;"><span
-																			style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span
-																				class="pstrut"
-																				style="height:2.7em;"></span><span
-																				class="sizing reset-size6 size3 mtight"><span
-																					class="mord mtight">1</span></span></span></span><span
-																		class="vlist-s">​</span></span><span
-																	class="vlist-r"><span class="vlist"
-																		style="height:0.15em;"><span></span></span></span></span></span></span><span
-														class="mspace"
-														style="margin-right:0.2222222222222222em;"></span><span
-														class="mbin">+</span><span class="mspace"
-														style="margin-right:0.2222222222222222em;"></span></span><span
-													class="base"><span class="strut"
-														style="height:0.43056em;vertical-align:0em;"></span><span
-														class="mord mathnormal">c</span></span></span></span></span><span>﻿</span></span>
-								<style>
-									@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')
-								</style><span data-token-index="0" contenteditable="false"
-									class="notion-text-equation-token"
-									style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span
-											class="katex"><span class="katex-mathml"><math
-													xmlns="http://www.w3.org/1998/Math/MathML">
-													<semantics>
-														<mrow>
-															<msub>
-																<mi>x</mi>
-																<mn>2</mn>
-															</msub>
-															<mtext>’</mtext>
-															<mo>=</mo>
-															<mi>a</mi>
-															<msub>
-																<mi>x</mi>
-																<mn>2</mn>
-															</msub>
-															<mo>+</mo>
-															<mi>b</mi>
-															<msub>
-																<mi>y</mi>
-																<mn>2</mn>
-															</msub>
-															<mo>+</mo>
-															<mi>c</mi>
-														</mrow>
-														<annotation encoding="application/x-tex">x_2’ = ax_2 + by_2 + c
-														</annotation>
-													</semantics>
-												</math></span><span class="katex-html" aria-hidden="true"><span
-													class="base"><span class="strut"
-														style="height:0.84444em;vertical-align:-0.15em;"></span><span
-														class="mord"><span class="mord mathnormal">x</span><span
-															class="msupsub"><span class="vlist-t vlist-t2"><span
-																	class="vlist-r"><span class="vlist"
-																		style="height:0.30110799999999993em;"><span
-																			style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span
-																				class="pstrut"
-																				style="height:2.7em;"></span><span
-																				class="sizing reset-size6 size3 mtight"><span
-																					class="mord mtight">2</span></span></span></span><span
-																		class="vlist-s">​</span></span><span
-																	class="vlist-r"><span class="vlist"
-																		style="height:0.15em;"><span></span></span></span></span></span></span><span
-														class="mord">’</span><span class="mspace"
-														style="margin-right:0.2777777777777778em;"></span><span
-														class="mrel">=</span><span class="mspace"
-														style="margin-right:0.2777777777777778em;"></span></span><span
-													class="base"><span class="strut"
-														style="height:0.73333em;vertical-align:-0.15em;"></span><span
-														class="mord mathnormal">a</span><span class="mord"><span
-															class="mord mathnormal">x</span><span class="msupsub"><span
-																class="vlist-t vlist-t2"><span class="vlist-r"><span
-																		class="vlist"
-																		style="height:0.30110799999999993em;"><span
-																			style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span
-																				class="pstrut"
-																				style="height:2.7em;"></span><span
-																				class="sizing reset-size6 size3 mtight"><span
-																					class="mord mtight">2</span></span></span></span><span
-																		class="vlist-s">​</span></span><span
-																	class="vlist-r"><span class="vlist"
-																		style="height:0.15em;"><span></span></span></span></span></span></span><span
-														class="mspace"
-														style="margin-right:0.2222222222222222em;"></span><span
-														class="mbin">+</span><span class="mspace"
-														style="margin-right:0.2222222222222222em;"></span></span><span
-													class="base"><span class="strut"
-														style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span
-														class="mord mathnormal">b</span><span class="mord"><span
-															class="mord mathnormal"
-															style="margin-right:0.03588em;">y</span><span
-															class="msupsub"><span class="vlist-t vlist-t2"><span
-																	class="vlist-r"><span class="vlist"
-																		style="height:0.30110799999999993em;"><span
-																			style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span
-																				class="pstrut"
-																				style="height:2.7em;"></span><span
-																				class="sizing reset-size6 size3 mtight"><span
-																					class="mord mtight">2</span></span></span></span><span
-																		class="vlist-s">​</span></span><span
-																	class="vlist-r"><span class="vlist"
-																		style="height:0.15em;"><span></span></span></span></span></span></span><span
-														class="mspace"
-														style="margin-right:0.2222222222222222em;"></span><span
-														class="mbin">+</span><span class="mspace"
-														style="margin-right:0.2222222222222222em;"></span></span><span
-													class="base"><span class="strut"
-														style="height:0.43056em;vertical-align:0em;"></span><span
-														class="mord mathnormal">c</span></span></span></span></span><span>﻿</span></span>
-								<style>
-									@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')
-								</style><span data-token-index="0" contenteditable="false"
-									class="notion-text-equation-token"
-									style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span
-											class="katex"><span class="katex-mathml"><math
-													xmlns="http://www.w3.org/1998/Math/MathML">
-													<semantics>
-														<mrow>
-															<msubsup>
-																<mi>x</mi>
-																<mn>3</mn>
-																<mo mathvariant="normal" lspace="0em" rspace="0em">′
-																</mo>
-															</msubsup>
-															<mo>=</mo>
-															<mi>a</mi>
-															<msub>
-																<mi>x</mi>
-																<mn>3</mn>
-															</msub>
-															<mo>+</mo>
-															<mi>b</mi>
-															<msub>
-																<mi>y</mi>
-																<mn>3</mn>
-															</msub>
-															<mo>+</mo>
-															<mi>c</mi>
-														</mrow>
-														<annotation encoding="application/x-tex">x_3&#x27; = ax_3 + by_3
-															+ c</annotation>
-													</semantics>
-												</math></span><span class="katex-html" aria-hidden="true"><span
-													class="base"><span class="strut"
-														style="height:1em;vertical-align:-0.24810799999999997em;"></span><span
-														class="mord"><span class="mord mathnormal">x</span><span
-															class="msupsub"><span class="vlist-t vlist-t2"><span
-																	class="vlist-r"><span class="vlist"
-																		style="height:0.751892em;"><span
-																			style="top:-2.4518920000000004em;margin-left:0em;margin-right:0.05em;"><span
-																				class="pstrut"
-																				style="height:2.7em;"></span><span
-																				class="sizing reset-size6 size3 mtight"><span
-																					class="mord mtight">3</span></span></span><span
-																			style="top:-3.063em;margin-right:0.05em;"><span
-																				class="pstrut"
-																				style="height:2.7em;"></span><span
-																				class="sizing reset-size6 size3 mtight"><span
-																					class="mord mtight"><span
-																						class="mord mtight">′</span></span></span></span></span><span
-																		class="vlist-s">​</span></span><span
-																	class="vlist-r"><span class="vlist"
-																		style="height:0.24810799999999997em;"><span></span></span></span></span></span></span><span
-														class="mspace"
-														style="margin-right:0.2777777777777778em;"></span><span
-														class="mrel">=</span><span class="mspace"
-														style="margin-right:0.2777777777777778em;"></span></span><span
-													class="base"><span class="strut"
-														style="height:0.73333em;vertical-align:-0.15em;"></span><span
-														class="mord mathnormal">a</span><span class="mord"><span
-															class="mord mathnormal">x</span><span class="msupsub"><span
-																class="vlist-t vlist-t2"><span class="vlist-r"><span
-																		class="vlist"
-																		style="height:0.30110799999999993em;"><span
-																			style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span
-																				class="pstrut"
-																				style="height:2.7em;"></span><span
-																				class="sizing reset-size6 size3 mtight"><span
-																					class="mord mtight">3</span></span></span></span><span
-																		class="vlist-s">​</span></span><span
-																	class="vlist-r"><span class="vlist"
-																		style="height:0.15em;"><span></span></span></span></span></span></span><span
-														class="mspace"
-														style="margin-right:0.2222222222222222em;"></span><span
-														class="mbin">+</span><span class="mspace"
-														style="margin-right:0.2222222222222222em;"></span></span><span
-													class="base"><span class="strut"
-														style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span
-														class="mord mathnormal">b</span><span class="mord"><span
-															class="mord mathnormal"
-															style="margin-right:0.03588em;">y</span><span
-															class="msupsub"><span class="vlist-t vlist-t2"><span
-																	class="vlist-r"><span class="vlist"
-																		style="height:0.30110799999999993em;"><span
-																			style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span
-																				class="pstrut"
-																				style="height:2.7em;"></span><span
-																				class="sizing reset-size6 size3 mtight"><span
-																					class="mord mtight">3</span></span></span></span><span
-																		class="vlist-s">​</span></span><span
-																	class="vlist-r"><span class="vlist"
-																		style="height:0.15em;"><span></span></span></span></span></span></span><span
-														class="mspace"
-														style="margin-right:0.2222222222222222em;"></span><span
-														class="mbin">+</span><span class="mspace"
-														style="margin-right:0.2222222222222222em;"></span></span><span
-													class="base"><span class="strut"
-														style="height:0.43056em;vertical-align:0em;"></span><span
-														class="mord mathnormal">c</span></span></span></span></span><span>﻿</span></span>
-							</p>
-						</div>
-					</div>
-					<p id="4aec4ef8-ede7-46bc-8564-5edf485b0624" class="">Using matrix calculations:</p>
-				</div>
-				<div id="7a2b2b00-3459-4452-814c-6154514561f0" style="width:100%" class="column">
-					<p id="98a474f5-4af0-40b8-b333-583e0ad85bab" class="">
-						<style>
-							@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')
-						</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token"
-							style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span
-									class="katex"><span class="katex-mathml"><math
-											xmlns="http://www.w3.org/1998/Math/MathML">
-											<semantics>
-												<mrow>
-													<msubsup>
-														<mi>y</mi>
-														<mn>1</mn>
-														<mo mathvariant="normal" lspace="0em" rspace="0em">′</mo>
-													</msubsup>
-													<mo>=</mo>
-													<mi>d</mi>
-													<msub>
-														<mi>x</mi>
-														<mn>1</mn>
-													</msub>
-													<mo>+</mo>
-													<mi>e</mi>
-													<msub>
-														<mi>y</mi>
-														<mn>1</mn>
-													</msub>
-													<mo>+</mo>
-													<mi>f</mi>
-												</mrow>
-												<annotation encoding="application/x-tex">y_1&#x27; = dx_1 + ey_1 + f
-												</annotation>
-											</semantics>
-										</math></span><span class="katex-html" aria-hidden="true"><span
-											class="base"><span class="strut"
-												style="height:1em;vertical-align:-0.24810799999999997em;"></span><span
-												class="mord"><span class="mord mathnormal"
-													style="margin-right:0.03588em;">y</span><span class="msupsub"><span
-														class="vlist-t vlist-t2"><span class="vlist-r"><span
-																class="vlist" style="height:0.751892em;"><span
-																	style="top:-2.4518920000000004em;margin-left:-0.03588em;margin-right:0.05em;"><span
-																		class="pstrut"
-																		style="height:2.7em;"></span><span
-																		class="sizing reset-size6 size3 mtight"><span
-																			class="mord mtight">1</span></span></span><span
-																	style="top:-3.063em;margin-right:0.05em;"><span
-																		class="pstrut"
-																		style="height:2.7em;"></span><span
-																		class="sizing reset-size6 size3 mtight"><span
-																			class="mord mtight"><span
-																				class="mord mtight">′</span></span></span></span></span><span
-																class="vlist-s">​</span></span><span
-															class="vlist-r"><span class="vlist"
-																style="height:0.24810799999999997em;"><span></span></span></span></span></span></span><span
-												class="mspace" style="margin-right:0.2777777777777778em;"></span><span
-												class="mrel">=</span><span class="mspace"
-												style="margin-right:0.2777777777777778em;"></span></span><span
-											class="base"><span class="strut"
-												style="height:0.84444em;vertical-align:-0.15em;"></span><span
-												class="mord mathnormal">d</span><span class="mord"><span
-													class="mord mathnormal">x</span><span class="msupsub"><span
-														class="vlist-t vlist-t2"><span class="vlist-r"><span
-																class="vlist"
-																style="height:0.30110799999999993em;"><span
-																	style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span
-																		class="pstrut"
-																		style="height:2.7em;"></span><span
-																		class="sizing reset-size6 size3 mtight"><span
-																			class="mord mtight">1</span></span></span></span><span
-																class="vlist-s">​</span></span><span
-															class="vlist-r"><span class="vlist"
-																style="height:0.15em;"><span></span></span></span></span></span></span><span
-												class="mspace" style="margin-right:0.2222222222222222em;"></span><span
-												class="mbin">+</span><span class="mspace"
-												style="margin-right:0.2222222222222222em;"></span></span><span
-											class="base"><span class="strut"
-												style="height:0.7777700000000001em;vertical-align:-0.19444em;"></span><span
-												class="mord mathnormal">e</span><span class="mord"><span
-													class="mord mathnormal"
-													style="margin-right:0.03588em;">y</span><span class="msupsub"><span
-														class="vlist-t vlist-t2"><span class="vlist-r"><span
-																class="vlist"
-																style="height:0.30110799999999993em;"><span
-																	style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span
-																		class="pstrut"
-																		style="height:2.7em;"></span><span
-																		class="sizing reset-size6 size3 mtight"><span
-																			class="mord mtight">1</span></span></span></span><span
-																class="vlist-s">​</span></span><span
-															class="vlist-r"><span class="vlist"
-																style="height:0.15em;"><span></span></span></span></span></span></span><span
-												class="mspace" style="margin-right:0.2222222222222222em;"></span><span
-												class="mbin">+</span><span class="mspace"
-												style="margin-right:0.2222222222222222em;"></span></span><span
-											class="base"><span class="strut"
-												style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span
-												class="mord mathnormal"
-												style="margin-right:0.10764em;">f</span></span></span></span></span><span>﻿</span></span>
-					</p>
-					<p id="ef5da93c-1ccb-47b9-8d6c-2059df9487a1" class="">
-						<style>
-							@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')
-						</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token"
-							style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span
-									class="katex"><span class="katex-mathml"><math
-											xmlns="http://www.w3.org/1998/Math/MathML">
-											<semantics>
-												<mrow>
-													<msubsup>
-														<mi>y</mi>
-														<mn>2</mn>
-														<mo mathvariant="normal" lspace="0em" rspace="0em">′</mo>
-													</msubsup>
-													<mo>=</mo>
-													<mi>d</mi>
-													<msub>
-														<mi>x</mi>
-														<mn>2</mn>
-													</msub>
-													<mo>+</mo>
-													<mi>e</mi>
-													<msub>
-														<mi>y</mi>
-														<mn>2</mn>
-													</msub>
-													<mo>+</mo>
-													<mi>f</mi>
-												</mrow>
-												<annotation encoding="application/x-tex">y_2&#x27; = dx_2 + ey_2 + f
-												</annotation>
-											</semantics>
-										</math></span><span class="katex-html" aria-hidden="true"><span
-											class="base"><span class="strut"
-												style="height:1em;vertical-align:-0.24810799999999997em;"></span><span
-												class="mord"><span class="mord mathnormal"
-													style="margin-right:0.03588em;">y</span><span class="msupsub"><span
-														class="vlist-t vlist-t2"><span class="vlist-r"><span
-																class="vlist" style="height:0.751892em;"><span
-																	style="top:-2.4518920000000004em;margin-left:-0.03588em;margin-right:0.05em;"><span
-																		class="pstrut"
-																		style="height:2.7em;"></span><span
-																		class="sizing reset-size6 size3 mtight"><span
-																			class="mord mtight">2</span></span></span><span
-																	style="top:-3.063em;margin-right:0.05em;"><span
-																		class="pstrut"
-																		style="height:2.7em;"></span><span
-																		class="sizing reset-size6 size3 mtight"><span
-																			class="mord mtight"><span
-																				class="mord mtight">′</span></span></span></span></span><span
-																class="vlist-s">​</span></span><span
-															class="vlist-r"><span class="vlist"
-																style="height:0.24810799999999997em;"><span></span></span></span></span></span></span><span
-												class="mspace" style="margin-right:0.2777777777777778em;"></span><span
-												class="mrel">=</span><span class="mspace"
-												style="margin-right:0.2777777777777778em;"></span></span><span
-											class="base"><span class="strut"
-												style="height:0.84444em;vertical-align:-0.15em;"></span><span
-												class="mord mathnormal">d</span><span class="mord"><span
-													class="mord mathnormal">x</span><span class="msupsub"><span
-														class="vlist-t vlist-t2"><span class="vlist-r"><span
-																class="vlist"
-																style="height:0.30110799999999993em;"><span
-																	style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span
-																		class="pstrut"
-																		style="height:2.7em;"></span><span
-																		class="sizing reset-size6 size3 mtight"><span
-																			class="mord mtight">2</span></span></span></span><span
-																class="vlist-s">​</span></span><span
-															class="vlist-r"><span class="vlist"
-																style="height:0.15em;"><span></span></span></span></span></span></span><span
-												class="mspace" style="margin-right:0.2222222222222222em;"></span><span
-												class="mbin">+</span><span class="mspace"
-												style="margin-right:0.2222222222222222em;"></span></span><span
-											class="base"><span class="strut"
-												style="height:0.7777700000000001em;vertical-align:-0.19444em;"></span><span
-												class="mord mathnormal">e</span><span class="mord"><span
-													class="mord mathnormal"
-													style="margin-right:0.03588em;">y</span><span class="msupsub"><span
-														class="vlist-t vlist-t2"><span class="vlist-r"><span
-																class="vlist"
-																style="height:0.30110799999999993em;"><span
-																	style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span
-																		class="pstrut"
-																		style="height:2.7em;"></span><span
-																		class="sizing reset-size6 size3 mtight"><span
-																			class="mord mtight">2</span></span></span></span><span
-																class="vlist-s">​</span></span><span
-															class="vlist-r"><span class="vlist"
-																style="height:0.15em;"><span></span></span></span></span></span></span><span
-												class="mspace" style="margin-right:0.2222222222222222em;"></span><span
-												class="mbin">+</span><span class="mspace"
-												style="margin-right:0.2222222222222222em;"></span></span><span
-											class="base"><span class="strut"
-												style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span
-												class="mord mathnormal"
-												style="margin-right:0.10764em;">f</span></span></span></span></span><span>﻿</span></span>
-					</p>
-					<p id="007e0be5-1ec7-4ba0-8e77-3f6fb2587c93" class="">
-						<style>
-							@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')
-						</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token"
-							style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span
-									class="katex"><span class="katex-mathml"><math
-											xmlns="http://www.w3.org/1998/Math/MathML">
-											<semantics>
-												<mrow>
-													<msubsup>
-														<mi>y</mi>
-														<mn>3</mn>
-														<mo mathvariant="normal" lspace="0em" rspace="0em">′</mo>
-													</msubsup>
-													<mo>=</mo>
-													<mi>d</mi>
-													<msub>
-														<mi>x</mi>
-														<mn>3</mn>
-													</msub>
-													<mo>+</mo>
-													<mi>e</mi>
-													<msub>
-														<mi>y</mi>
-														<mn>3</mn>
-													</msub>
-													<mo>+</mo>
-													<mi>f</mi>
-												</mrow>
-												<annotation encoding="application/x-tex">y_3&#x27; = dx_3 + ey_3 + f
-												</annotation>
-											</semantics>
-										</math></span><span class="katex-html" aria-hidden="true"><span
-											class="base"><span class="strut"
-												style="height:1em;vertical-align:-0.24810799999999997em;"></span><span
-												class="mord"><span class="mord mathnormal"
-													style="margin-right:0.03588em;">y</span><span class="msupsub"><span
-														class="vlist-t vlist-t2"><span class="vlist-r"><span
-																class="vlist" style="height:0.751892em;"><span
-																	style="top:-2.4518920000000004em;margin-left:-0.03588em;margin-right:0.05em;"><span
-																		class="pstrut"
-																		style="height:2.7em;"></span><span
-																		class="sizing reset-size6 size3 mtight"><span
-																			class="mord mtight">3</span></span></span><span
-																	style="top:-3.063em;margin-right:0.05em;"><span
-																		class="pstrut"
-																		style="height:2.7em;"></span><span
-																		class="sizing reset-size6 size3 mtight"><span
-																			class="mord mtight"><span
-																				class="mord mtight">′</span></span></span></span></span><span
-																class="vlist-s">​</span></span><span
-															class="vlist-r"><span class="vlist"
-																style="height:0.24810799999999997em;"><span></span></span></span></span></span></span><span
-												class="mspace" style="margin-right:0.2777777777777778em;"></span><span
-												class="mrel">=</span><span class="mspace"
-												style="margin-right:0.2777777777777778em;"></span></span><span
-											class="base"><span class="strut"
-												style="height:0.84444em;vertical-align:-0.15em;"></span><span
-												class="mord mathnormal">d</span><span class="mord"><span
-													class="mord mathnormal">x</span><span class="msupsub"><span
-														class="vlist-t vlist-t2"><span class="vlist-r"><span
-																class="vlist"
-																style="height:0.30110799999999993em;"><span
-																	style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span
-																		class="pstrut"
-																		style="height:2.7em;"></span><span
-																		class="sizing reset-size6 size3 mtight"><span
-																			class="mord mtight">3</span></span></span></span><span
-																class="vlist-s">​</span></span><span
-															class="vlist-r"><span class="vlist"
-																style="height:0.15em;"><span></span></span></span></span></span></span><span
-												class="mspace" style="margin-right:0.2222222222222222em;"></span><span
-												class="mbin">+</span><span class="mspace"
-												style="margin-right:0.2222222222222222em;"></span></span><span
-											class="base"><span class="strut"
-												style="height:0.7777700000000001em;vertical-align:-0.19444em;"></span><span
-												class="mord mathnormal">e</span><span class="mord"><span
-													class="mord mathnormal"
-													style="margin-right:0.03588em;">y</span><span class="msupsub"><span
-														class="vlist-t vlist-t2"><span class="vlist-r"><span
-																class="vlist"
-																style="height:0.30110799999999993em;"><span
-																	style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span
-																		class="pstrut"
-																		style="height:2.7em;"></span><span
-																		class="sizing reset-size6 size3 mtight"><span
-																			class="mord mtight">3</span></span></span></span><span
-																class="vlist-s">​</span></span><span
-															class="vlist-r"><span class="vlist"
-																style="height:0.15em;"><span></span></span></span></span></span></span><span
-												class="mspace" style="margin-right:0.2222222222222222em;"></span><span
-												class="mbin">+</span><span class="mspace"
-												style="margin-right:0.2222222222222222em;"></span></span><span
-											class="base"><span class="strut"
-												style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span
-												class="mord mathnormal"
-												style="margin-right:0.10764em;">f</span></span></span></span></span><span>﻿</span></span>
-					</p>
-				</div>
-			</div>
-			<figure id="28033470-15bf-48e4-9e21-6fbd3825d9e0" class="image"><a
-					href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/affine_transformation_equation.png"><img
-						style="width:384px"
-						src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/affine_transformation_equation.png" /></a>
-			</figure>
-			<p id="f92bcdb9-79c5-4cec-9353-2ab304ea0e2a" class="">
-			</p>
-			<figure id="f479cabf-9868-440c-8c9c-5bc7e47ae50e" class="image"><a
-					href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/inverse_affine_transformation_equation.png"><img
-						style="width:672px"
-						src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/inverse_affine_transformation_equation.png" /></a>
-			</figure>
-			<p id="6658f194-a899-47cd-86c3-5bf063ba5d76" class="">Note: Unlike conventional matrix calculations, the
-				image representations in python are (y, x) where y represents the vertical value and x represents the
-				horrizontal value. However, this does not affect our calculations since the rows in the affine matrix is
-				correspondingly flipped as well!</p>
-			<h3 id="5ddd00ff-ba46-4b8c-9c00-86a523fe85b4" class="">Results</h3>
-			<div id="64541d4f-854c-4d05-9302-119f8beaa867" class="column-list">
-				<div id="9f1a5eaf-1e40-49cd-8186-b29d6c2a9195" style="width:33.33333333333333%" class="column">
-					<figure id="95c795bb-0406-43a4-9b5f-15695c1055d4" class="image" style="text-align:center"><a
-							href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me_dominic_transi_0.png"><img
-								style="width:432px"
-								src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me_dominic_transi_0.png" /></a>
-					</figure>
-					<figure id="573647b2-5fd8-4679-aad6-5c1c326d9dbf" class="image" style="text-align:center"><a
-							href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me_dominic_transi_3.png"><img
-								style="width:384px"
-								src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me_dominic_transi_3.png" /></a>
-					</figure>
-					<p id="1310505c-e88f-4bb8-a66a-4a85eebaed32" class="">First image</p>
-				</div>
-				<div id="e3997261-c555-4ed3-b0ae-a8b0ac04bb58" style="width:33.33333333333333%" class="column">
-					<figure id="12eba1e7-65c2-47d0-93bf-45ab237e4ee5" class="image" style="text-align:center"><a
-							href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me_dominic_transi_1.png"><img
-								style="width:432px"
-								src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me_dominic_transi_1.png" /></a>
-					</figure>
-					<figure id="629d5bbd-6c16-49eb-a5c1-d858fcfabaad" class="image" style="text-align:center"><a
-							href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me_dominic_transi_4.png"><img
-								style="width:384px"
-								src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me_dominic_transi_4.png" /></a>
-					</figure>
-					<p id="ebeb07aa-756d-479c-8811-a7837289f04c" class="">Midpoint image</p>
-				</div>
-				<div id="06054d50-93e8-4329-bd51-9097fd26a0ae" style="width:33.33333333333334%" class="column">
-					<figure id="5789cde5-56a6-4470-a8ae-8bbfe2260149" class="image" style="text-align:center"><a
-							href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me_dominic_transi_2.png"><img
-								style="width:432px"
-								src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me_dominic_transi_2.png" /></a>
-					</figure>
-					<figure id="3439ba69-c3b3-4f01-8365-0314bc1c7ff9" class="image" style="text-align:center"><a
-							href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me_dominic_transi_5.png"><img
-								style="width:384px"
-								src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me_dominic_transi_5.png" /></a>
-					</figure>
-					<p id="3a5b50d6-b08e-4fd9-9ba0-2dd45cf49ca7" class="">Final image</p>
-				</div>
-			</div>
-			<h2 id="eda155e6-abdb-4d93-9209-d4525bc3e3b4" class="">Part 3. The Morph Sequence</h2>
-			<p id="8f136dd0-716e-4991-aa5b-67d7c7703f7e" class="">In this stage, we will generate each frame within the
-				morph sequence. Initially, we will utilize a method identical to that applied in the mid-way face
-				production, with a slight modification. Instead of a standard procedure, a weighted average approach
-				will be incorporated in this process.</p>
-			<div id="6bdfeebd-193a-43e1-a8da-942ed952537a" class="column-list">
-				<div id="5658fd8c-8fec-4c90-acc3-f0a82c5fec7a" style="width:50.000000000000014%" class="column">
-					<h3 id="40006c3c-18fb-4b29-b698-389a9d5143b0" class="">Results</h3>
-					<p id="b18fcdec-a10b-4fa4-91e0-d3b5ae02a077" class="">Morphing faces</p>
-					<figure id="c9b3f94c-99be-45ba-aeab-0197b2952064" class="image"><a
-							href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/gif_folder/me_dominic_fike.gif"><img
-								style="width:700px"
-								src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/gif_folder/me_dominic_fike.gif" /></a>
-					</figure>
-				</div>
-				<div id="6d369b18-ee4d-4f2b-97b4-07532a4837d5" style="width:50%" class="column">
-					<h3 id="7ecd98bc-6f37-447d-b2ec-48338e84a17b" class="">Morphing animals (Cats)</h3>
-					<figure id="e0322067-d741-4c84-802e-99fa0eb13774" class="image"><a
-							href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/gif_folder/tofu_with_chains_crisp.gif"><img
-								style="width:192px"
-								src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/gif_folder/tofu_with_chains_crisp.gif" /></a>
-					</figure>
-				</div>
-			</div>
-			<h2 id="65d3cd7b-a940-4d5c-aa6b-01757f8488e3" class="">Part 4. The &quot;Mean face&quot; of a population
-			</h2>
-			<p id="09cf99ac-6625-407f-8189-9e648b5fa0cf" class="">Using the <a
-					href="https://web.archive.org/web/20210305094647/http://www2.imm.dtu.dk/~aam/datasets/datasets.html">Danes</a>
-				dataset , we can compute the ‘mean’ face of 37 images. This is done by finding the average points of the
-				facial landmarks, provided by the data set and performing inverse wrapping and bilinear interpolation.
-			</p>
-			<h3 id="5c3a5a9d-9736-44c5-908a-9300d8178fac" class="">‘Mean’ face</h3>
-			<figure id="7b55dd34-4dcf-4723-a35d-2a430259e6f6" class="image"><a
-					href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/average_face_in_danes_dataset.jpg"><img
-						style="width:640px"
-						src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/average_face_in_danes_dataset.jpg" /></a>
-			</figure>
-			<h3 id="586de52b-289f-4308-8935-dd9745a1fb83" class="">Some examples of morphing the images from the dataset
-				to the mean</h3>
-			<div id="ca8833e4-26e3-45f3-82f7-d2782402c13a" class="column-list">
-				<div id="0bb36ab0-dc87-4682-a8c8-def36ffa953e" style="width:50%" class="column">
-					<figure id="df8fded9-a731-4d7a-97d5-34d96a361dd0" class="image"><a
-							href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me.jpg"><img
-								style="width:700px"
-								src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me.jpg" /></a>
-						<figcaption>Original</figcaption>
-					</figure>
-					<figure id="ca7021dc-53fb-4aed-a19b-473bd17d7e7a" class="image"><a
-							href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/01-1m.bmp"><img
-								style="width:640px"
-								src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/01-1m.bmp" /></a>
-						<figcaption>Original</figcaption>
-					</figure>
-					<figure id="36356bcd-4acf-4395-a437-def01d2c72cf" class="image"><a
-							href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/13-1m.bmp"><img
-								style="width:640px"
-								src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/13-1m.bmp" /></a>
-						<figcaption>Original</figcaption>
-					</figure>
-				</div>
-				<div id="ae6d9f9e-0d16-4b69-95a5-636700ba9594" style="width:50%" class="column">
-					<figure id="188e8e6f-7798-4963-a93f-6a2641440811" class="image"><a
-							href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me_average_face_in_danes_dataset_for_morphing_white_background.jpg"><img
-								style="width:700px"
-								src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me_average_face_in_danes_dataset_for_morphing_white_background.jpg" /></a>
-						<figcaption>Result</figcaption>
-					</figure>
-					<figure id="41fed873-ca27-4aab-8738-1fea78aa3bb5" class="image"><a
-							href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/image4.jpg"><img
-								style="width:640px"
-								src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/image4.jpg" /></a>
-						<figcaption>Result</figcaption>
-					</figure>
-					<figure id="1319cc9e-913f-4a53-9e01-de3d8bffaeed" class="image"><a
-							href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/image5.jpg"><img
-								style="width:640px"
-								src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/image5.jpg" /></a>
-						<figcaption>Result</figcaption>
-					</figure>
-				</div>
-			</div>
-			<h3 id="c435c858-eb4e-4db1-a675-33af530a60f3" class="">More examples but this time without color dissolution
-			</h3>
-			<div id="3ba08541-8ad1-443f-b241-141269858678" class="column-list">
-				<div id="541511e5-1f75-44fa-9824-431930fc8948" style="width:50%" class="column">
-					<figure id="11c2a84a-7418-4e2b-abf1-857b9fd93da6" class="image"><a
-							href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/01-1m%201.bmp"><img
-								style="width:640px"
-								src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/01-1m%201.bmp" /></a>
-						<figcaption>Original</figcaption>
-					</figure>
-					<figure id="8e03201e-d286-4c5b-8d9b-04ecd17c0614" class="image"><a
-							href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me%201.jpg"><img
-								style="width:700px"
-								src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me%201.jpg" /></a>
-						<figcaption>Original</figcaption>
-					</figure>
-				</div>
-				<div id="07d35f26-4183-40d6-830d-b58867e8dd85" style="width:50%" class="column">
-					<figure id="68fa6484-2449-47e7-aa17-02dd4733951b" class="image"><a
-							href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/image4%201.jpg"><img
-								style="width:640px"
-								src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/image4%201.jpg" /></a>
-						<figcaption>Result</figcaption>
-					</figure>
-					<figure id="46cad566-302a-4101-9039-b99150d94085" class="image"><a
-							href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me_average_danes_wrapping_only.jpg"><img
-								style="width:700px"
-								src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me_average_danes_wrapping_only.jpg" /></a>
-						<figcaption>Result</figcaption>
-					</figure>
-				</div>
-			</div>
-			<h2 id="9a165d0a-2c62-4612-949c-fcd6370eaff3" class="">Part 5. Caricatures: Extrapolating from the mean</h2>
-			<p id="b0319a87-b051-4446-a8bc-187674170506" class="">Finally, I will extrapolate from the mean to create a
-				caricature of myself. In the context of face shapes, this meant using the average face shape (vector v)
-				as a baseline to emphasize unique features in a specific face (vector w). The differential vector (w -
-				v) encapsulates the distinctive attributes of vector w compared to the mean. To accentuate these unique
-				traits, we add a scaled version of this differential vector back to w, using α(w−v) where α is a
-				positive scalar. This process not only highlights but also exaggerates the unique features of face w,
-				effectively creating a caricature by intensifying the deviations from the mean face shape. The scalar α
-				adjusts the level of exaggeration applied to the unique facial features, providing a means to control
-				the caricature&#x27;s degree of distortion from the original.</p>
-			<h3 id="2b24f861-c80d-4c21-84eb-7dd888d4f291" class="">Results</h3>
-			<div id="80857aa5-47ef-48ec-b8d3-77ae4ff6d1b0" class="column-list">
-				<div id="1dd71056-8c8e-47b2-8fa9-bc0c483e4476" style="width:25%" class="column">
-					<figure id="3840d09e-6fcb-4cd6-8051-e99ef0a2fc16" class="image"><a
-							href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me%202.jpg"><img
-								style="width:700px"
-								src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me%202.jpg" /></a>
-						<figcaption>Original</figcaption>
-					</figure>
-					<figure id="b710a3a9-28cd-4c96-ad8f-dfc43e02f449" class="image"><a
-							href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/08-1f.bmp"><img
-								style="width:640px"
-								src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/08-1f.bmp" /></a>
-						<figcaption>Original</figcaption>
-					</figure>
-				</div>
-				<div id="610a29ab-e2fb-4883-bffe-8e09ef0954cd" style="width:25%" class="column">
-					<figure id="e2af8cbb-60ad-41a3-be6f-7aa3c0a831f9" class="image"><a
-							href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me_extrapolated_average_face_in_danes_alpha_0.2.jpg"><img
-								style="width:700px"
-								src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me_extrapolated_average_face_in_danes_alpha_0.2.jpg" /></a>
-						<figcaption>Alpha = 0.2</figcaption>
-					</figure>
-					<figure id="8543475f-0fcd-4d0b-8121-7e0450b641d3" class="image"><a
-							href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/morphed_first_danes__avg_dane_im_alpha_point_0.6.jpg"><img
-								style="width:640px"
-								src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/morphed_first_danes__avg_dane_im_alpha_point_0.6.jpg" /></a>
-						<figcaption>Alpha = 0.6</figcaption>
-					</figure>
-				</div>
-				<div id="fe194d6c-89b6-4fb4-b8e2-28301df286e7" style="width:25%" class="column">
-					<figure id="87703e5f-8744-484d-bf8b-a6cf72c19b5c" class="image"><a
-							href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me_extrapolated_average_face_in_danes_alpha_0.4.jpg"><img
-								style="width:700px"
-								src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me_extrapolated_average_face_in_danes_alpha_0.4.jpg" /></a>
-						<figcaption>Alpha = 0.4</figcaption>
-					</figure>
-					<figure id="2c10fbae-0bf0-4cb8-aa0c-f777d72a6837" class="image"><a
-							href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/morphed_first_danes__avg_dane_im_alpha_point_1.2.jpg"><img
-								style="width:640px"
-								src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/morphed_first_danes__avg_dane_im_alpha_point_1.2.jpg" /></a>
-						<figcaption>Alpha = 1.2</figcaption>
-					</figure>
-				</div>
-				<div id="2b30499c-9f5e-4579-976a-4f0139d6fdc7" style="width:25%" class="column">
-					<figure id="6e4ce4e3-3f3e-40af-9cec-72489bc5370f" class="image"><a
-							href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me_extrapolated_average_face_in_danes_alpha_0.6.jpg"><img
-								style="width:700px"
-								src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me_extrapolated_average_face_in_danes_alpha_0.6.jpg" /></a>
-						<figcaption>Alpha = 0.6</figcaption>
-					</figure>
-					<figure id="24386f40-1e94-4aa1-8862-0fe583f09140" class="image"><a
-							href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/morphed_first_danes__avg_dane_im_alpha_point_1.8.jpg"><img
-								style="width:640px"
-								src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/morphed_first_danes__avg_dane_im_alpha_point_1.8.jpg" /></a>
-						<figcaption>Alpha = 1.8</figcaption>
-					</figure>
-				</div>
-			</div>
-			<h2 id="52f67b38-d875-4f34-b72b-39fed34402d6" class="">Bells &amp; Whistles!</h2>
-			<p id="6eabc0af-b3cb-4b48-9fc1-e5f94c5b6544" class="">In this part, I will change the ethnicity and gender
-				of myself, and compute the PCA basis for the Danes date sets face space.</p>
-			<h3 id="32547b78-d01b-48cc-aaf3-10796f3720f2" class="">Changing Ethnicity</h3>
-			<p id="a658c374-9f61-40f0-b066-e7a7db567f51" class="">I will be using an image set containing the average
-				image set across the world, spanning various countries and ethnicity. </p>
-			<div id="816324e7-80fd-495a-a980-7ecda3a5858f" class="column-list">
-				<div id="0f639783-7e9f-4625-a0ff-66614e193667" style="width:20.000000000000007%" class="column">
-					<figure id="dff10fbb-c20b-4722-9859-0e4c57b8a7da" class="image"><a
-							href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me%203.jpg"><img
-								style="width:700px"
-								src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me%203.jpg" /></a>
-						<figcaption>Original</figcaption>
-					</figure>
-				</div>
-				<div id="e3a02ef1-f6a3-4a33-9711-cc80c90c0b25" style="width:20%" class="column">
-					<figure id="fd096753-1f0e-413e-9a46-2f38fcdbc430" class="image"><a
-							href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/Peru.jpg"><img
-								style="width:700px"
-								src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/Peru.jpg" /></a>
-						<figcaption>Average Peru Male face</figcaption>
-					</figure>
-					<p id="4eba9d28-57f6-4ba4-bad3-52f16c5e3c7b" class="">
-					</p>
-				</div>
-				<div id="c4e60100-ec07-4657-a7a4-262a7e9d0ef2" style="width:20.000000000000007%" class="column">
-					<figure id="e80137bb-ad82-4d2b-be76-9b52800d91a8" class="image"><a
-							href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me_peru_image_shape_only.jpg"><img
-								style="width:700px"
-								src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me_peru_image_shape_only.jpg" /></a>
-						<figcaption>Result of changing shape only</figcaption>
-					</figure>
-				</div>
-				<div id="13110bd7-292f-434a-a147-cdd87d94ed6d" style="width:20%" class="column">
-					<figure id="053f506c-0767-4d0b-ac8f-508744a3b4d6" class="image"><a
-							href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me_peru_image_color_only.jpg"><img
-								style="width:700px"
-								src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me_peru_image_color_only.jpg" /></a>
-						<figcaption>Result of changing color only</figcaption>
-					</figure>
-				</div>
-				<div id="b9291ead-692a-4a09-8684-441d9e29508c" style="width:20.000000000000007%" class="column">
-					<figure id="2a1269a4-af4c-4341-a629-331fe3c3b0ec" class="image"><a
-							href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me_peru_image.jpg"><img
-								style="width:700px"
-								src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me_peru_image.jpg" /></a>
-						<figcaption>Result of changing both color and shape</figcaption>
-					</figure>
-					<p id="26ed93b2-fa86-47b8-80dd-9ae327ef01e5" class="">
-					</p>
-				</div>
-			</div>
-			<div id="dc92dd84-f611-4abe-ad01-4a136689ac06" class="column-list">
-				<div id="c87dffc9-284f-4b67-9b0e-cb29afe4b190" style="width:20%" class="column">
-					<figure id="2af04cde-2007-4bf6-bb6d-fbfbaefa677d" class="image"><a
-							href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me%203.jpg"><img
-								style="width:700px"
-								src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me%203.jpg" /></a>
-						<figcaption>Original</figcaption>
-					</figure>
-				</div>
-				<div id="e544d752-9b03-4975-96ed-ed4789e49a4f" style="width:20%" class="column">
-					<figure id="7ed21396-e5f3-40b1-aec2-4a1e8933eaeb" class="image"><a
-							href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/Ethiopian.jpg"><img
-								style="width:700px"
-								src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/Ethiopian.jpg" /></a>
-						<figcaption>Average Ethiopian Female face</figcaption>
-					</figure>
-					<p id="83455266-a7e5-4d23-94bf-64e69486cb0c" class="">
-					</p>
-				</div>
-				<div id="db44b021-8c91-4268-a3fa-41d96b48eeb7" style="width:20%" class="column">
-					<figure id="416ef52b-7ef3-4b2b-85cb-40dda785bc13" class="image"><a
-							href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me_ethiopia_image_shape_only.jpg"><img
-								style="width:700px"
-								src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me_ethiopia_image_shape_only.jpg" /></a>
-						<figcaption>Result of changing shape only</figcaption>
-					</figure>
-				</div>
-				<div id="32d85c88-89d9-44a2-bc3d-b3b477267f8b" style="width:20%" class="column">
-					<figure id="7c05757d-fa2d-489b-a9cf-860a6e6b69f5" class="image"><a
-							href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me_ethiopia_image_color_only.jpg"><img
-								style="width:700px"
-								src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me_ethiopia_image_color_only.jpg" /></a>
-						<figcaption>Result of changing color only</figcaption>
-					</figure>
-				</div>
-				<div id="4162d21c-eee9-43a3-96c3-003810a009cc" style="width:20%" class="column">
-					<figure id="48b7379c-75fd-46f3-a23e-7105dfcd6953" class="image"><a
-							href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me_ethiopia_image.jpg"><img
-								style="width:700px"
-								src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me_ethiopia_image.jpg" /></a>
-						<figcaption>Result of changing both color and shape</figcaption>
-					</figure>
-				</div>
-			</div>
-			<div id="3715c996-3aa2-417a-bccb-37296eeeb291" class="column-list">
-				<div id="80692421-62b3-489d-9a20-3c52dfbd9a14" style="width:20%" class="column">
-					<figure id="6f4c8a53-2eab-494f-897b-1869f71bd5ed" class="image"><a
-							href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me.jpg"><img
-								style="width:700px"
-								src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me.jpg" /></a>
-						<figcaption>Original</figcaption>
-					</figure>
-				</div>
-				<div id="ccd44a68-57a8-455f-84db-bca75891f07a" style="width:20%" class="column">
-					<figure id="a86fa3cf-3c6f-43e1-9793-5fd9807ebf4a" class="image"><a
-							href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/average_danes_wrapping_me_only.jpg"><img
-								style="width:700px"
-								src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/average_danes_wrapping_me_only.jpg" /></a>
-						<figcaption>Averaged Danes face from dataset</figcaption>
-					</figure>
-				</div>
-				<div id="e1d13a03-e794-4f74-95a6-9c3b4c898ec3" style="width:20%" class="column">
-					<figure id="afa07013-84c4-4978-98b0-0cf437da414f" class="image"><a
-							href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me_average_danes_wrapping_only%201.jpg"><img
-								style="width:700px"
-								src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me_average_danes_wrapping_only%201.jpg" /></a>
-						<figcaption>Result of changing shape only</figcaption>
-					</figure>
-				</div>
-				<div id="8d61d9c0-8158-4d9c-a15b-2343892ed235" style="width:20%" class="column">
-					<figure id="13b9994d-a3bc-45e1-a7ba-65d2a0653879" class="image"><a
-							href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me_average_danes_color_only.jpg"><img
-								style="width:700px"
-								src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me_average_danes_color_only.jpg" /></a>
-						<figcaption>Result of changing color only</figcaption>
-					</figure>
-					<p id="80b17795-13c4-41bb-84a1-c68fe81e6ade" class="">
-					</p>
-				</div>
-				<div id="aff89298-1d51-423a-9de5-3ee5819346ed" style="width:20%" class="column">
-					<figure id="4d30a53c-a642-4291-b008-1e5db6381f25" class="image"><a
-							href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me_average_face_in_danes_dataset_for_morphing_white_background.jpg"><img
-								style="width:700px"
-								src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me_average_face_in_danes_dataset_for_morphing_white_background.jpg" /></a>
-						<figcaption>Result of changing both color and shape</figcaption>
-					</figure>
-				</div>
-			</div>
-			<h3 id="4f78c117-d7b5-4a12-a1c9-e9d64e90d387" class="">Computing the PCA basis</h3>
-			<p id="38d6e8cd-297c-4fe3-b851-8a1e97615eb4" class="">To compute the PCA basis or eigenfaces of a dataset,
-				we start by taking the mean image and then subtract it from each image, resulting in a set of centered
-				images. While one could calculate the covariance matrix following this step, we opted for a more
-				efficient approach by employing a PCA library, saving time and optimizing the process. This library,
-				presumably using Singular Value Decomposition (SVD), facilitates the computation of eigenvalues and
-				eigenvectors (the eigenfaces), crucial components that highlight the main variations in the dataset. We
-				then select the top k eigenfaces associated with the highest eigenvalues, capturing the significant
-				facial features and effectively reducing data dimensionality. Consequently, each image can be
-				represented as a combination of these selected eigenfaces, ensuring efficient data compression and
-				preservation of vital facial features for subsequent analysis.</p>
-			<h3 id="d5184a60-ac81-4882-ba68-19c2c3dbc88c" class=""><strong>The eigenfaces of Danes dataset</strong></h3>
-			<figure id="db37b5e6-6ee7-48f9-aaf8-dbd179f33404" class="image"><a
-					href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/danes_eigenfaces.png"><img
-						style="width:2779px"
-						src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/danes_eigenfaces.png" /></a>
-			</figure>
-			<h3 id="a864801f-146a-4f58-9a5d-fa01cbdff9f7" class="">Image reconstruction<strong> with the
-					eigenfaces:</strong></h3>
-			<h3 id="6f3fa800-d5db-4897-8dac-5670c8c2e614" class="">Target Image</h3>
-			<figure id="9f4a2da6-e344-4470-a8c1-d32f4c81e630" class="image"><a
-					href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/08-1f%201.bmp"><img
-						style="width:640px"
-						src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/08-1f%201.bmp" /></a>
-			</figure>
-			<h3 id="4d5f730c-9799-4ef5-8e6f-f301c69d490f" class="">Images</h3>
-			<p id="f83520d9-d66c-4947-b930-18fe1ef28704" class="">The images in order of increasing number of eigenfaces
-				used to reconstruct the image, starting from 1. </p>
-			<figure id="d53d79ed-5e22-45a9-8f3b-d6a255481bde" class="image"><a
-					href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/first_danes_reconstruction_image_lists.png"><img
-						style="width:2381px"
-						src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/first_danes_reconstruction_image_lists.png" /></a>
-			</figure>
-			<p id="e5122b57-b474-4538-b654-a990a684f2c0" class="">
-			</p>
-			<h3 id="ace05781-ff9b-4125-b445-9b55d7de96d0" class=""><strong>Caricatures created with the
-					eigenfaces:</strong></h3>
-			<h3 id="a5fb47d1-0ff1-4d1e-8aa5-30d606d7f24c" class="">Original Image</h3>
-			<figure id="0a1d781d-51e7-405d-b20d-e99e39b3055b" class="image"><a
-					href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/08-1f%201.bmp"><img
-						style="width:640px"
-						src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/08-1f%201.bmp" /></a>
-			</figure>
-			<p id="97aaf4b4-1f86-4101-b822-acf592ff8130" class="">
-			</p>
-			<p id="0fa4ebed-7f65-4e6b-937f-db4d8b989c2d" class="">Each image has the same number of eigenfaces but with
-				different random exaggeration coefficients. </p>
-			<figure id="688ac49b-9f31-4f43-91b4-89f933b1af07" class="image"><a
-					href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/danes_first_image_with_random_exageration.png"><img
-						style="width:2381px"
-						src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/danes_first_image_with_random_exageration.png" /></a>
-			</figure>
-		</div>
-	</article>
-</body>
-
-</html>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>CS 180 - Project 3 [Fa23]</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+    margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-interactiveBlue { background-color: rgba(35, 131, 226, .07); }
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-translucentGray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="a0b48f1f-b2ee-438a-b628-6895167e46a4" class="page sans"><header><img class="page-cover-image" src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me_dominic_transi_5%201.png" style="object-position:center 51.550000000000004%"/><h1 class="page-title">CS 180 - Project 3 [Fa23]</h1><p class="page-description"></p></header><div class="page-body"><h1 id="1dd87e08-3d38-477a-aee3-8cdf0bb58702" class="">Face Morphing</h1><p id="77411fe3-eaee-4a7a-ab90-6cc55aa46389" class="">Author: Alexander Ng</p><h2 id="78297180-a9cd-4fc3-b1c3-42ae2f4d8297" class="">Overview</h2><p id="338544d9-ab64-4eb8-8b35-ef0255477e1f" class="">This program will be divided up into parts, with the final product creating a &#x27;morph&#x27; animation from one face to another.
+
+&quot;A morph is a simultaneous warp of the image shape and a cross-dissolve of the image colors. The cross-dissolve is the easy part; controlling and doing the warp is the hard part. The warp is controlled by defining a correspondence between the two pictures. The correspondence should map eyes to eyes, mouth to mouth, chin to chin, ears to ears, etc., to get the smoothest transformations possible&quot;. - CS 180 Fall 2023</p><h2 id="bba71d4b-2868-4d2f-b555-099ac9461181" class="">Part 1. Defining Correspondences</h2><p id="c4782e30-6c23-4770-a49d-52f22c7d8c71" class="">To morph 2 images, effectively, I first manually selected corresponding keypoints on each image with this <a href="https://inst.eecs.berkeley.edu/~cs194-26/fa22/upload/files/proj3/cs194-26-aex/tool.html">labeling tool</a> , using facial features as landmarks. Afterwards, I employed the Delaunay method from scipy.spatial to compute the Delaunay triangulation on the first image and copy the simplexes to the other.</p><h3 id="0094bbae-f10c-4265-be21-ce74be5cea0c" class="">Results</h3><div id="5b30ee1c-a928-4a7c-9e50-24c325d88673" class="column-list"><div id="6386f046-6c51-4a2f-bb55-fdc5597e72dd" style="width:25%" class="column"><figure id="078e9169-706f-4f54-96ec-717af415a36e" class="image"><a href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me_dominic__0.png"><img style="width:422px" src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me_dominic__0.png"/></a></figure><figure id="2a92593e-a2db-48ed-8415-82541deadc49" class="image" style="text-align:center"><a href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/tofu_c_0.png"><img style="width:270px" src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/tofu_c_0.png"/></a></figure></div><div id="d3f7cec2-a6d4-41e9-9558-38d5ac6c4ee7" style="width:25%" class="column"><figure id="a9fb9d4f-b46d-4bcd-9879-33128b4b0992" class="image"><a href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me_dominic__2.png"><img style="width:422px" src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me_dominic__2.png"/></a></figure><figure id="8595cc74-0caa-45ab-90a6-991197765374" class="image" style="text-align:center"><a href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/tofu_c_2.png"><img style="width:270px" src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/tofu_c_2.png"/></a></figure></div><div id="3298a2aa-a214-4e5a-a640-a6f46067eafc" style="width:25%" class="column"><figure id="09dfc2b2-0848-4121-8ba3-40d6313d2ab1" class="image"><a href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me_dominic__1.png"><img style="width:422px" src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me_dominic__1.png"/></a></figure><figure id="aa0ea24b-0e69-4be4-b702-d1b9fc7c872f" class="image" style="text-align:center"><a href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/tofu_c_1.png"><img style="width:270px" src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/tofu_c_1.png"/></a></figure></div><div id="4f05be79-e5cd-4c63-9e8c-5e2747546025" style="width:25%" class="column"><figure id="5faaa11a-9c2d-4366-b365-476685b04617" class="image"><a href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me_dominic__3.png"><img style="width:422px" src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me_dominic__3.png"/></a></figure><figure id="d4d4991c-b3c0-4e04-af6e-b9d9730c6139" class="image" style="text-align:center"><a href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/tofu_c_3.png"><img style="width:270px" src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/tofu_c_3.png"/></a></figure></div></div><h2 id="71dde94e-31c3-4ca7-8101-0c6c4af4f97c" class="">Part 2: Computing the &quot;Mid-way Face&quot;</h2><p id="c26f4f42-db5d-4478-8745-9f8ecdca17e1" class="">In this part, we will compute the &quot;Mid-way Face&quot; between the first image to the final image. First, we will find the transitional image between the first and final image by taking a weighted average. Then, we will find the affine transformation matrix from both images to the transitional image. Finally, we will use the new found affine transformation matrix to perform wrapping and color dissolution.
+
+To find the affine transformation function, we can use the corresponding points taken during Part 1 to solve for the affine transformation matrix. Since there are 6 unknowns, we will need 3 points (Note: Each point has an x and y component). After finding the affine transformation matrix, we can use inverse wrapping to take pixels from our first image into our new &quot;Mid-way Face&quot; image.</p><h3 id="f9920896-33a6-47fa-8e8d-ca5cde817727" class="">Equations</h3><h3 id="e6bc57bc-63ab-4ad1-a39b-9c0c3a8442f1" class="">Affine Transformation with Homogenous coordinates:</h3><figure id="7b45369e-ec0c-42be-8a7b-577d01acc9cf" class="image"><a href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/affine_transformation_equation.png"><img style="width:390px" src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/affine_transformation_equation.png"/></a></figure><h3 id="e0f900f7-6b21-4741-b9cc-d280672813be" class="">Solving for Affine Transformation through Correspondence points:</h3><p id="a3c1f9db-320e-4c3d-b4ac-2ddda32f0095" class="">In linear algebra:</p><div id="6e8930ae-3203-49e7-a891-83dd6933bf78" class="column-list"><div id="082bc590-8948-4251-b22a-2ed050f101a0" style="width:100%" class="column"><div id="f1b6db32-1daf-43b6-b7d0-496e4b355201" class="column-list"><div id="d2c351ae-1b96-4e5a-9241-cbfa54a74e99" style="width:31.25%" class="column"><p id="9c271d37-473d-46f9-b90d-b7232955b66a" class="">
+</p></div><div id="4b93606f-dca6-4364-b089-ce0e8a927a28" style="width:112.5%" class="column"><p id="ef0a3fa6-2fc5-454f-9a57-471a706d844e" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msubsup><mi>x</mi><mn>1</mn><mo mathvariant="normal" lspace="0em" rspace="0em">′</mo></msubsup><mo>=</mo><mi>a</mi><msub><mi>x</mi><mn>1</mn></msub><mo>+</mo><mi>b</mi><msub><mi>y</mi><mn>1</mn></msub><mo>+</mo><mi>c</mi></mrow><annotation encoding="application/x-tex">x_1&#x27; = ax_1 + by_1 + c</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.24810799999999997em;"></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.751892em;"><span style="top:-2.4518920000000004em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.24810799999999997em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.73333em;vertical-align:-0.15em;"></span><span class="mord mathnormal">a</span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathnormal">b</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal">c</span></span></span></span></span><span>﻿</span></span> 
+<style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mn>2</mn></msub><mtext>’</mtext><mo>=</mo><mi>a</mi><msub><mi>x</mi><mn>2</mn></msub><mo>+</mo><mi>b</mi><msub><mi>y</mi><mn>2</mn></msub><mo>+</mo><mi>c</mi></mrow><annotation encoding="application/x-tex">x_2’ = ax_2 + by_2 + c </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.84444em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord">’</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.73333em;vertical-align:-0.15em;"></span><span class="mord mathnormal">a</span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathnormal">b</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal">c</span></span></span></span></span><span>﻿</span></span>
+<style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msubsup><mi>x</mi><mn>3</mn><mo mathvariant="normal" lspace="0em" rspace="0em">′</mo></msubsup><mo>=</mo><mi>a</mi><msub><mi>x</mi><mn>3</mn></msub><mo>+</mo><mi>b</mi><msub><mi>y</mi><mn>3</mn></msub><mo>+</mo><mi>c</mi></mrow><annotation encoding="application/x-tex">x_3&#x27; = ax_3 + by_3 + c</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.24810799999999997em;"></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.751892em;"><span style="top:-2.4518920000000004em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">3</span></span></span><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.24810799999999997em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.73333em;vertical-align:-0.15em;"></span><span class="mord mathnormal">a</span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">3</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathnormal">b</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">3</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal">c</span></span></span></span></span><span>﻿</span></span></p></div></div><p id="4aec4ef8-ede7-46bc-8564-5edf485b0624" class="">Using matrix calculations:</p></div><div id="7a2b2b00-3459-4452-814c-6154514561f0" style="width:100%" class="column"><p id="98a474f5-4af0-40b8-b333-583e0ad85bab" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msubsup><mi>y</mi><mn>1</mn><mo mathvariant="normal" lspace="0em" rspace="0em">′</mo></msubsup><mo>=</mo><mi>d</mi><msub><mi>x</mi><mn>1</mn></msub><mo>+</mo><mi>e</mi><msub><mi>y</mi><mn>1</mn></msub><mo>+</mo><mi>f</mi></mrow><annotation encoding="application/x-tex">y_1&#x27; = dx_1 + ey_1 + f </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.24810799999999997em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.751892em;"><span style="top:-2.4518920000000004em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.24810799999999997em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.84444em;vertical-align:-0.15em;"></span><span class="mord mathnormal">d</span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.7777700000000001em;vertical-align:-0.19444em;"></span><span class="mord mathnormal">e</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span></span></span></span></span><span>﻿</span></span></p><p id="ef5da93c-1ccb-47b9-8d6c-2059df9487a1" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msubsup><mi>y</mi><mn>2</mn><mo mathvariant="normal" lspace="0em" rspace="0em">′</mo></msubsup><mo>=</mo><mi>d</mi><msub><mi>x</mi><mn>2</mn></msub><mo>+</mo><mi>e</mi><msub><mi>y</mi><mn>2</mn></msub><mo>+</mo><mi>f</mi></mrow><annotation encoding="application/x-tex">y_2&#x27; = dx_2 + ey_2 + f </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.24810799999999997em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.751892em;"><span style="top:-2.4518920000000004em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.24810799999999997em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.84444em;vertical-align:-0.15em;"></span><span class="mord mathnormal">d</span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.7777700000000001em;vertical-align:-0.19444em;"></span><span class="mord mathnormal">e</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span></span></span></span></span><span>﻿</span></span></p><p id="007e0be5-1ec7-4ba0-8e77-3f6fb2587c93" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msubsup><mi>y</mi><mn>3</mn><mo mathvariant="normal" lspace="0em" rspace="0em">′</mo></msubsup><mo>=</mo><mi>d</mi><msub><mi>x</mi><mn>3</mn></msub><mo>+</mo><mi>e</mi><msub><mi>y</mi><mn>3</mn></msub><mo>+</mo><mi>f</mi></mrow><annotation encoding="application/x-tex">y_3&#x27; = dx_3 + ey_3 + f </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.24810799999999997em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.751892em;"><span style="top:-2.4518920000000004em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">3</span></span></span><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.24810799999999997em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.84444em;vertical-align:-0.15em;"></span><span class="mord mathnormal">d</span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">3</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.7777700000000001em;vertical-align:-0.19444em;"></span><span class="mord mathnormal">e</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">3</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span></span></span></span></span><span>﻿</span></span></p></div></div><figure id="28033470-15bf-48e4-9e21-6fbd3825d9e0" class="image"><a href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/affine_transformation_equation.png"><img style="width:384px" src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/affine_transformation_equation.png"/></a></figure><p id="f92bcdb9-79c5-4cec-9353-2ab304ea0e2a" class="">
+</p><figure id="f479cabf-9868-440c-8c9c-5bc7e47ae50e" class="image"><a href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/inverse_affine_transformation_equation.png"><img style="width:672px" src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/inverse_affine_transformation_equation.png"/></a></figure><p id="6658f194-a899-47cd-86c3-5bf063ba5d76" class="">Note: Unlike conventional matrix calculations, the image representations in python are (y, x) where y represents the vertical value and x represents the horrizontal value. However, this does not affect our calculations since the rows in the affine matrix is correspondingly flipped as well!</p><h3 id="5ddd00ff-ba46-4b8c-9c00-86a523fe85b4" class="">Results</h3><div id="64541d4f-854c-4d05-9302-119f8beaa867" class="column-list"><div id="9f1a5eaf-1e40-49cd-8186-b29d6c2a9195" style="width:33.33333333333333%" class="column"><figure id="95c795bb-0406-43a4-9b5f-15695c1055d4" class="image" style="text-align:center"><a href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me_dominic_transi_0.png"><img style="width:432px" src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me_dominic_transi_0.png"/></a></figure><figure id="573647b2-5fd8-4679-aad6-5c1c326d9dbf" class="image" style="text-align:center"><a href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me_dominic_transi_3.png"><img style="width:384px" src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me_dominic_transi_3.png"/></a></figure><p id="1310505c-e88f-4bb8-a66a-4a85eebaed32" class="">First image</p></div><div id="e3997261-c555-4ed3-b0ae-a8b0ac04bb58" style="width:33.33333333333333%" class="column"><figure id="12eba1e7-65c2-47d0-93bf-45ab237e4ee5" class="image" style="text-align:center"><a href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me_dominic_transi_1.png"><img style="width:432px" src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me_dominic_transi_1.png"/></a></figure><figure id="629d5bbd-6c16-49eb-a5c1-d858fcfabaad" class="image" style="text-align:center"><a href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me_dominic_transi_4.png"><img style="width:384px" src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me_dominic_transi_4.png"/></a></figure><p id="ebeb07aa-756d-479c-8811-a7837289f04c" class="">Midpoint image</p></div><div id="06054d50-93e8-4329-bd51-9097fd26a0ae" style="width:33.33333333333334%" class="column"><figure id="5789cde5-56a6-4470-a8ae-8bbfe2260149" class="image" style="text-align:center"><a href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me_dominic_transi_2.png"><img style="width:432px" src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me_dominic_transi_2.png"/></a></figure><figure id="3439ba69-c3b3-4f01-8365-0314bc1c7ff9" class="image" style="text-align:center"><a href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me_dominic_transi_5.png"><img style="width:384px" src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me_dominic_transi_5.png"/></a></figure><p id="3a5b50d6-b08e-4fd9-9ba0-2dd45cf49ca7" class="">Final image</p></div></div><h2 id="eda155e6-abdb-4d93-9209-d4525bc3e3b4" class="">Part 3. The Morph Sequence</h2><p id="8f136dd0-716e-4991-aa5b-67d7c7703f7e" class="">In this stage, we will generate each frame within the morph sequence. Initially, we will utilize a method identical to that applied in the mid-way face production, with a slight modification. Instead of a standard procedure, a weighted average approach will be incorporated in this process.</p><div id="6bdfeebd-193a-43e1-a8da-942ed952537a" class="column-list"><div id="5658fd8c-8fec-4c90-acc3-f0a82c5fec7a" style="width:50.000000000000014%" class="column"><h3 id="40006c3c-18fb-4b29-b698-389a9d5143b0" class="">Results</h3><p id="b18fcdec-a10b-4fa4-91e0-d3b5ae02a077" class="">Morphing faces</p><figure id="c9b3f94c-99be-45ba-aeab-0197b2952064" class="image"><a href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/dominic_fike.jpg"><img style="width:700px" src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/gif_folder/me_dominic_fike.gif"/></a></figure></div><div id="6d369b18-ee4d-4f2b-97b4-07532a4837d5" style="width:50%" class="column"><h3 id="7ecd98bc-6f37-447d-b2ec-48338e84a17b" class="">Morphing animals (Cats)</h3><figure id="e0322067-d741-4c84-802e-99fa0eb13774" class="image"><a href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/tofu_with_chains.jpg"><img style="width:192px" src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/gif_folder/tofu_with_chains_crisp.gif"/></a></figure></div></div><h2 id="65d3cd7b-a940-4d5c-aa6b-01757f8488e3" class="">Part 4. The &quot;Mean face&quot; of a population</h2><p id="09cf99ac-6625-407f-8189-9e648b5fa0cf" class="">Using the <a href="https://web.archive.org/web/20210305094647/http://www2.imm.dtu.dk/~aam/datasets/datasets.html">Danes</a> dataset , we can compute the ‘mean’ face of 37 images. This is done by finding the average points of the facial landmarks, provided by the data set and performing inverse wrapping and bilinear interpolation.</p><h3 id="5c3a5a9d-9736-44c5-908a-9300d8178fac" class="">‘Mean’ face</h3><figure id="7b55dd34-4dcf-4723-a35d-2a430259e6f6" class="image"><a href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/average_face_in_danes_dataset.jpg"><img style="width:640px" src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/average_face_in_danes_dataset.jpg"/></a></figure><h3 id="586de52b-289f-4308-8935-dd9745a1fb83" class="">Some examples of morphing the images from the dataset to the mean</h3><div id="ca8833e4-26e3-45f3-82f7-d2782402c13a" class="column-list"><div id="0bb36ab0-dc87-4682-a8c8-def36ffa953e" style="width:50%" class="column"><figure id="df8fded9-a731-4d7a-97d5-34d96a361dd0" class="image"><a href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me.jpg"><img style="width:700px" src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me.jpg"/></a><figcaption>Original</figcaption></figure><figure id="ca7021dc-53fb-4aed-a19b-473bd17d7e7a" class="image"><a href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/01-1m.bmp"><img style="width:640px" src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/01-1m.bmp"/></a><figcaption>Original</figcaption></figure><figure id="36356bcd-4acf-4395-a437-def01d2c72cf" class="image"><a href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/13-1m.bmp"><img style="width:640px" src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/13-1m.bmp"/></a><figcaption>Original</figcaption></figure></div><div id="ae6d9f9e-0d16-4b69-95a5-636700ba9594" style="width:50%" class="column"><figure id="188e8e6f-7798-4963-a93f-6a2641440811" class="image"><a href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me_average_face_in_danes_dataset_for_morphing_white_background.jpg"><img style="width:700px" src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me_average_face_in_danes_dataset_for_morphing_white_background.jpg"/></a><figcaption>Result</figcaption></figure><figure id="41fed873-ca27-4aab-8738-1fea78aa3bb5" class="image"><a href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/image4.jpg"><img style="width:640px" src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/image4.jpg"/></a><figcaption>Result</figcaption></figure><figure id="1319cc9e-913f-4a53-9e01-de3d8bffaeed" class="image"><a href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/image5.jpg"><img style="width:640px" src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/image5.jpg"/></a><figcaption>Result</figcaption></figure></div></div><h3 id="c435c858-eb4e-4db1-a675-33af530a60f3" class="">More examples but this time without color dissolution</h3><div id="3ba08541-8ad1-443f-b241-141269858678" class="column-list"><div id="541511e5-1f75-44fa-9824-431930fc8948" style="width:50%" class="column"><figure id="11c2a84a-7418-4e2b-abf1-857b9fd93da6" class="image"><a href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/01-1m%201.bmp"><img style="width:640px" src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/01-1m%201.bmp"/></a><figcaption>Original</figcaption></figure><figure id="8e03201e-d286-4c5b-8d9b-04ecd17c0614" class="image"><a href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me%201.jpg"><img style="width:700px" src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me%201.jpg"/></a><figcaption>Original</figcaption></figure></div><div id="07d35f26-4183-40d6-830d-b58867e8dd85" style="width:50%" class="column"><figure id="68fa6484-2449-47e7-aa17-02dd4733951b" class="image"><a href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/image4%201.jpg"><img style="width:640px" src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/image4%201.jpg"/></a><figcaption>Result</figcaption></figure><figure id="46cad566-302a-4101-9039-b99150d94085" class="image"><a href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me_average_danes_wrapping_only.jpg"><img style="width:700px" src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me_average_danes_wrapping_only.jpg"/></a><figcaption>Result</figcaption></figure></div></div><h2 id="9a165d0a-2c62-4612-949c-fcd6370eaff3" class="">Part 5. Caricatures: Extrapolating from the mean</h2><p id="b0319a87-b051-4446-a8bc-187674170506" class="">Finally, I will extrapolate from the mean to create a caricature of myself. In the context of face shapes, this meant using the average face shape (vector v) as a baseline to emphasize unique features in a specific face (vector w). The differential vector (w - v) encapsulates the distinctive attributes of vector w compared to the mean. To accentuate these unique traits, we add a scaled version of this differential vector back to w, using α(w−v) where α is a positive scalar. This process not only highlights but also exaggerates the unique features of face w, effectively creating a caricature by intensifying the deviations from the mean face shape. The scalar α adjusts the level of exaggeration applied to the unique facial features, providing a means to control the caricature&#x27;s degree of distortion from the original.</p><h3 id="2b24f861-c80d-4c21-84eb-7dd888d4f291" class="">Results</h3><div id="80857aa5-47ef-48ec-b8d3-77ae4ff6d1b0" class="column-list"><div id="1dd71056-8c8e-47b2-8fa9-bc0c483e4476" style="width:25%" class="column"><figure id="3840d09e-6fcb-4cd6-8051-e99ef0a2fc16" class="image"><a href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me%202.jpg"><img style="width:700px" src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me%202.jpg"/></a><figcaption>Original</figcaption></figure><figure id="b710a3a9-28cd-4c96-ad8f-dfc43e02f449" class="image"><a href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/08-1f.bmp"><img style="width:640px" src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/08-1f.bmp"/></a><figcaption>Original</figcaption></figure></div><div id="610a29ab-e2fb-4883-bffe-8e09ef0954cd" style="width:25%" class="column"><figure id="e2af8cbb-60ad-41a3-be6f-7aa3c0a831f9" class="image"><a href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me_extrapolated_average_face_in_danes_alpha_0.2.jpg"><img style="width:700px" src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me_extrapolated_average_face_in_danes_alpha_0.2.jpg"/></a><figcaption>Alpha = 0.2</figcaption></figure><figure id="8543475f-0fcd-4d0b-8121-7e0450b641d3" class="image"><a href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/morphed_first_danes__avg_dane_im_alpha_point_0.6.jpg"><img style="width:640px" src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/morphed_first_danes__avg_dane_im_alpha_point_0.6.jpg"/></a><figcaption>Alpha = 0.6</figcaption></figure></div><div id="fe194d6c-89b6-4fb4-b8e2-28301df286e7" style="width:25%" class="column"><figure id="87703e5f-8744-484d-bf8b-a6cf72c19b5c" class="image"><a href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me_extrapolated_average_face_in_danes_alpha_0.4.jpg"><img style="width:700px" src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me_extrapolated_average_face_in_danes_alpha_0.4.jpg"/></a><figcaption>Alpha = 0.4</figcaption></figure><figure id="2c10fbae-0bf0-4cb8-aa0c-f777d72a6837" class="image"><a href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/morphed_first_danes__avg_dane_im_alpha_point_1.2.jpg"><img style="width:640px" src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/morphed_first_danes__avg_dane_im_alpha_point_1.2.jpg"/></a><figcaption>Alpha = 1.2</figcaption></figure></div><div id="2b30499c-9f5e-4579-976a-4f0139d6fdc7" style="width:25%" class="column"><figure id="6e4ce4e3-3f3e-40af-9cec-72489bc5370f" class="image"><a href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me_extrapolated_average_face_in_danes_alpha_0.6.jpg"><img style="width:700px" src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me_extrapolated_average_face_in_danes_alpha_0.6.jpg"/></a><figcaption>Alpha = 0.6</figcaption></figure><figure id="24386f40-1e94-4aa1-8862-0fe583f09140" class="image"><a href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/morphed_first_danes__avg_dane_im_alpha_point_1.8.jpg"><img style="width:640px" src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/morphed_first_danes__avg_dane_im_alpha_point_1.8.jpg"/></a><figcaption>Alpha = 1.8</figcaption></figure></div></div><h2 id="52f67b38-d875-4f34-b72b-39fed34402d6" class="">Bells &amp; Whistles!</h2><p id="6eabc0af-b3cb-4b48-9fc1-e5f94c5b6544" class="">In this part, I will change the ethnicity and gender of myself, and compute the PCA basis for the Danes date sets face space.</p><h3 id="32547b78-d01b-48cc-aaf3-10796f3720f2" class="">Changing Ethnicity</h3><p id="a658c374-9f61-40f0-b066-e7a7db567f51" class="">I will be using an image set containing the average image set across the world, spanning various countries and ethnicity. </p><div id="816324e7-80fd-495a-a980-7ecda3a5858f" class="column-list"><div id="0f639783-7e9f-4625-a0ff-66614e193667" style="width:20.000000000000007%" class="column"><figure id="dff10fbb-c20b-4722-9859-0e4c57b8a7da" class="image"><a href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me%203.jpg"><img style="width:700px" src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me%203.jpg"/></a><figcaption>Original</figcaption></figure></div><div id="e3a02ef1-f6a3-4a33-9711-cc80c90c0b25" style="width:20%" class="column"><figure id="fd096753-1f0e-413e-9a46-2f38fcdbc430" class="image"><a href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/Peru.jpg"><img style="width:700px" src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/Peru.jpg"/></a><figcaption>Average Peru Male face</figcaption></figure><p id="4eba9d28-57f6-4ba4-bad3-52f16c5e3c7b" class="">
+</p></div><div id="c4e60100-ec07-4657-a7a4-262a7e9d0ef2" style="width:20.000000000000007%" class="column"><figure id="e80137bb-ad82-4d2b-be76-9b52800d91a8" class="image"><a href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me_peru_image_shape_only.jpg"><img style="width:700px" src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me_peru_image_shape_only.jpg"/></a><figcaption>Result of changing shape only</figcaption></figure></div><div id="13110bd7-292f-434a-a147-cdd87d94ed6d" style="width:20%" class="column"><figure id="053f506c-0767-4d0b-ac8f-508744a3b4d6" class="image"><a href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me_peru_image_color_only.jpg"><img style="width:700px" src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me_peru_image_color_only.jpg"/></a><figcaption>Result of changing color only</figcaption></figure></div><div id="b9291ead-692a-4a09-8684-441d9e29508c" style="width:20.000000000000007%" class="column"><figure id="2a1269a4-af4c-4341-a629-331fe3c3b0ec" class="image"><a href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me_peru_image.jpg"><img style="width:700px" src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me_peru_image.jpg"/></a><figcaption>Result of changing both color and shape</figcaption></figure><p id="26ed93b2-fa86-47b8-80dd-9ae327ef01e5" class="">
+</p></div></div><div id="dc92dd84-f611-4abe-ad01-4a136689ac06" class="column-list"><div id="c87dffc9-284f-4b67-9b0e-cb29afe4b190" style="width:20%" class="column"><figure id="2af04cde-2007-4bf6-bb6d-fbfbaefa677d" class="image"><a href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me%203.jpg"><img style="width:700px" src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me%203.jpg"/></a><figcaption>Original</figcaption></figure></div><div id="e544d752-9b03-4975-96ed-ed4789e49a4f" style="width:20%" class="column"><figure id="7ed21396-e5f3-40b1-aec2-4a1e8933eaeb" class="image"><a href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/Ethiopian.jpg"><img style="width:700px" src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/Ethiopian.jpg"/></a><figcaption>Average Ethiopian Female face</figcaption></figure><p id="83455266-a7e5-4d23-94bf-64e69486cb0c" class="">
+</p></div><div id="db44b021-8c91-4268-a3fa-41d96b48eeb7" style="width:20%" class="column"><figure id="416ef52b-7ef3-4b2b-85cb-40dda785bc13" class="image"><a href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me_ethiopia_image_shape_only.jpg"><img style="width:700px" src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me_ethiopia_image_shape_only.jpg"/></a><figcaption>Result of changing shape only</figcaption></figure></div><div id="32d85c88-89d9-44a2-bc3d-b3b477267f8b" style="width:20%" class="column"><figure id="7c05757d-fa2d-489b-a9cf-860a6e6b69f5" class="image"><a href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me_ethiopia_image_color_only.jpg"><img style="width:700px" src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me_ethiopia_image_color_only.jpg"/></a><figcaption>Result of changing color only</figcaption></figure></div><div id="4162d21c-eee9-43a3-96c3-003810a009cc" style="width:20%" class="column"><figure id="48b7379c-75fd-46f3-a23e-7105dfcd6953" class="image"><a href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me_ethiopia_image.jpg"><img style="width:700px" src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me_ethiopia_image.jpg"/></a><figcaption>Result of changing both color and shape</figcaption></figure></div></div><div id="3715c996-3aa2-417a-bccb-37296eeeb291" class="column-list"><div id="80692421-62b3-489d-9a20-3c52dfbd9a14" style="width:20%" class="column"><figure id="6f4c8a53-2eab-494f-897b-1869f71bd5ed" class="image"><a href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me.jpg"><img style="width:700px" src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me.jpg"/></a><figcaption>Original</figcaption></figure></div><div id="ccd44a68-57a8-455f-84db-bca75891f07a" style="width:20%" class="column"><figure id="a86fa3cf-3c6f-43e1-9793-5fd9807ebf4a" class="image"><a href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/average_danes_wrapping_me_only.jpg"><img style="width:700px" src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/average_danes_wrapping_me_only.jpg"/></a><figcaption>Averaged Danes face from dataset</figcaption></figure></div><div id="e1d13a03-e794-4f74-95a6-9c3b4c898ec3" style="width:20%" class="column"><figure id="afa07013-84c4-4978-98b0-0cf437da414f" class="image"><a href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me_average_danes_wrapping_only%201.jpg"><img style="width:700px" src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me_average_danes_wrapping_only%201.jpg"/></a><figcaption>Result of changing shape only</figcaption></figure></div><div id="8d61d9c0-8158-4d9c-a15b-2343892ed235" style="width:20%" class="column"><figure id="13b9994d-a3bc-45e1-a7ba-65d2a0653879" class="image"><a href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me_average_danes_color_only.jpg"><img style="width:700px" src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me_average_danes_color_only.jpg"/></a><figcaption>Result of changing color only</figcaption></figure><p id="80b17795-13c4-41bb-84a1-c68fe81e6ade" class="">
+</p></div><div id="aff89298-1d51-423a-9de5-3ee5819346ed" style="width:20%" class="column"><figure id="4d30a53c-a642-4291-b008-1e5db6381f25" class="image"><a href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me_average_face_in_danes_dataset_for_morphing_white_background.jpg"><img style="width:700px" src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/me_average_face_in_danes_dataset_for_morphing_white_background.jpg"/></a><figcaption>Result of changing both color and shape</figcaption></figure></div></div><h3 id="4f78c117-d7b5-4a12-a1c9-e9d64e90d387" class="">Computing the PCA basis</h3><p id="38d6e8cd-297c-4fe3-b851-8a1e97615eb4" class="">To compute the PCA basis or eigenfaces of a dataset, we start by taking the mean image and then subtract it from each image, resulting in a set of centered images. While one could calculate the covariance matrix following this step, we opted for a more efficient approach by employing a PCA library, saving time and optimizing the process. This library, presumably using Singular Value Decomposition (SVD), facilitates the computation of eigenvalues and eigenvectors (the eigenfaces), crucial components that highlight the main variations in the dataset. We then select the top k eigenfaces associated with the highest eigenvalues, capturing the significant facial features and effectively reducing data dimensionality. Consequently, each image can be represented as a combination of these selected eigenfaces, ensuring efficient data compression and preservation of vital facial features for subsequent analysis.</p><h3 id="d5184a60-ac81-4882-ba68-19c2c3dbc88c" class=""><strong>The eigenfaces of Danes dataset</strong></h3><figure id="db37b5e6-6ee7-48f9-aaf8-dbd179f33404" class="image"><a href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/danes_eigenfaces.png"><img style="width:2779px" src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/danes_eigenfaces.png"/></a></figure><h3 id="a864801f-146a-4f58-9a5d-fa01cbdff9f7" class="">Image reconstruction<strong> with the eigenfaces:</strong></h3><h3 id="6f3fa800-d5db-4897-8dac-5670c8c2e614" class="">Target Image</h3><figure id="9f4a2da6-e344-4470-a8c1-d32f4c81e630" class="image"><a href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/08-1f%201.bmp"><img style="width:640px" src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/08-1f%201.bmp"/></a></figure><h3 id="4d5f730c-9799-4ef5-8e6f-f301c69d490f" class="">Images</h3><p id="f83520d9-d66c-4947-b930-18fe1ef28704" class="">The images in order of increasing number of eigenfaces used to reconstruct the image, starting from 1. </p><figure id="d53d79ed-5e22-45a9-8f3b-d6a255481bde" class="image"><a href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/first_danes_reconstruction_image_lists.png"><img style="width:2381px" src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/first_danes_reconstruction_image_lists.png"/></a></figure><p id="e5122b57-b474-4538-b654-a990a684f2c0" class="">
+</p><h3 id="ace05781-ff9b-4125-b445-9b55d7de96d0" class=""><strong>Caricatures created with the eigenfaces:</strong></h3><h3 id="a5fb47d1-0ff1-4d1e-8aa5-30d606d7f24c" class="">Original Image</h3><figure id="0a1d781d-51e7-405d-b20d-e99e39b3055b" class="image"><a href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/08-1f%201.bmp"><img style="width:640px" src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/08-1f%201.bmp"/></a></figure><p id="97aaf4b4-1f86-4101-b822-acf592ff8130" class="">
+</p><p id="0fa4ebed-7f65-4e6b-937f-db4d8b989c2d" class="">Each image has the same number of eigenfaces but with different random exaggeration coefficients. </p><figure id="688ac49b-9f31-4f43-91b4-89f933b1af07" class="image"><a href="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/danes_first_image_with_random_exageration.png"><img style="width:2381px" src="CS%20180%20-%20Project%203%20%5BFa23%5D%20a0b48f1fb2ee438ab6286895167e46a4/danes_first_image_with_random_exageration.png"/></a></figure></div></article></body></html>
